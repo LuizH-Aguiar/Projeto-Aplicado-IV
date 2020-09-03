@@ -1,1 +1,2 @@
-# PA-IV
+# Projeto Aplicado-IV de Engenharia de Computação
+O objetivo do projeto é a criação de uma interface de controle de estoques para lojas, utilizando Java e integrando o sistema com MySQL. No sistema, é possível ver todos os produtos da loja, com seus códigos, quantidade, preços e seus fornecedores. Também será possível analisar o lucro da loja, mediante o número de vendas de cada produto e o preço inicial pago pelo mesmo.

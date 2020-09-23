@@ -4,14 +4,13 @@ Produzido por: Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
 package telas;
 
 import dao.UsuariosDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.Usuarios;
+import static java.lang.System.exit;
 import javax.swing.JOptionPane;
+import model.Usuarios;
 
 /**
  *
- * @author Fabiana Nunes
+ * @author Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
  */
 public class FrmLogin extends javax.swing.JFrame {
 
@@ -20,6 +19,7 @@ public class FrmLogin extends javax.swing.JFrame {
      */
     public FrmLogin() {
         initComponents();
+        //this.setLocationRelativeTo(null);
     }
 
     /**
@@ -42,6 +42,12 @@ public class FrmLogin extends javax.swing.JFrame {
         cbtipo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setFocusCycleRoot(false);
+        setMinimumSize(new java.awt.Dimension(400, 350));
+        setPreferredSize(new java.awt.Dimension(400, 350));
+        setResizable(false);
+        setSize(new java.awt.Dimension(400, 350));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -95,6 +101,11 @@ public class FrmLogin extends javax.swing.JFrame {
 
         cbtipo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--------------", "Administrador", "Visitante" }));
+        cbtipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbtipoActionPerformed(evt);
+            }
+        });
         getContentPane().add(cbtipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 160, 30));
 
         pack();
@@ -105,12 +116,13 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtusuarioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
+        exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             int tipo;
+            boolean ret;
 
             Usuarios obj = new Usuarios();
 
@@ -134,15 +146,19 @@ public class FrmLogin extends javax.swing.JFrame {
             }
 
             UsuariosDAO dao = new UsuariosDAO();
-            dao.EfetuaLogin(obj);
-            this.dispose();
+            ret = dao.EfetuaLogin(obj);
+            if(ret) this.dispose();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Aconteceu o erro: " + e);
-            
+
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cbtipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbtipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbtipoActionPerformed
 
     /**
      * @param args the command line arguments

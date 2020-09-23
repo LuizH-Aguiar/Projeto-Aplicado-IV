@@ -5,21 +5,21 @@ package model;
 
 /**
  *
- * @author Fabiana Nunes
+ * @author Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
  */
 public class Usuarios {
     
-    private int codigo;
+    private int Cod_usuario;
     private String nome;
     private String senha;
     private String tipo;
 
-    public int getCodigo() {
-        return codigo;
+    public int getCod_usuario() {
+        return Cod_usuario;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setCod_usuario(int Cod_usuario) {
+        this.Cod_usuario = Cod_usuario;
     }
 
     public String getNome() {

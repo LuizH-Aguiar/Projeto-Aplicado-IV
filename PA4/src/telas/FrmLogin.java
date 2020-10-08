@@ -45,7 +45,6 @@ public class FrmLogin extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFocusCycleRoot(false);
         setMinimumSize(new java.awt.Dimension(400, 350));
-        setPreferredSize(new java.awt.Dimension(400, 350));
         setResizable(false);
         setSize(new java.awt.Dimension(400, 350));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -65,7 +64,7 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3.setText("Tipo:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 80, 30));
 
-        txtusuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtusuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtusuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtusuarioActionPerformed(evt);
@@ -73,7 +72,7 @@ public class FrmLogin extends javax.swing.JFrame {
         });
         getContentPane().add(txtusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 160, 30));
 
-        txtpassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtpassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 160, 30));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -99,8 +98,8 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel4.setText("Senha:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 80, 30));
 
-        cbtipo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cbtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--------------", "Administrador", "Visitante" }));
+        cbtipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--------------", "Administrador", "Vendedor" }));
         cbtipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbtipoActionPerformed(evt);
@@ -120,6 +119,7 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
         try {
             int tipo;
             boolean ret;
@@ -141,7 +141,7 @@ public class FrmLogin extends javax.swing.JFrame {
                 break;
 
                 case 2:
-                obj.setTipo("Visitante");
+                obj.setTipo("Vendedor");
                 break;
             }
 

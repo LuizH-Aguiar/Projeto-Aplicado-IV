@@ -29,31 +29,31 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtempresa = new javax.swing.JTextField();
         txtcnpj = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        btnmenu = new javax.swing.JButton();
-        btncadastrar = new javax.swing.JButton();
         txtrepresentante = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menutitulo = new javax.swing.JMenu();
+        menucadastrar = new javax.swing.JMenu();
+        menuprincipal = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(425, 325));
+        setPreferredSize(new java.awt.Dimension(425, 325));
+        setResizable(false);
+        setSize(new java.awt.Dimension(425, 325));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Cadastro de fornecedores");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 280, 40));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Empresa:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 60, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 60, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Representante:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 100, 30));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 100, 30));
 
         txtempresa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtempresa.addActionListener(new java.awt.event.ActionListener() {
@@ -61,47 +61,48 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
                 txtempresaActionPerformed(evt);
             }
         });
-        getContentPane().add(txtempresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 130, 30));
+        getContentPane().add(txtempresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 130, 30));
 
         txtcnpj.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtcnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 130, 30));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 400, 20));
+        getContentPane().add(txtcnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 130, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("CNPJ:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 227, 40, 30));
-
-        btnmenu.setText("Menu");
-        btnmenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnmenuActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 80, -1));
-
-        btncadastrar.setText("Cadastrar");
-        btncadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncadastrarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btncadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 40, 30));
 
         txtrepresentante.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtrepresentante, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 130, 30));
+        getContentPane().add(txtrepresentante, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 130, 30));
+
+        menutitulo.setText("Cadastro de fornecedores                                                ");
+        jMenuBar1.add(menutitulo);
+
+        menucadastrar.setText("Cadastrar");
+        menucadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menucadastrarMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menucadastrar);
+
+        menuprincipal.setText("Menu");
+        menuprincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuprincipalMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuprincipal);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtempresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtempresaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtempresaActionPerformed
 
-    private void btnmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmenuActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnmenuActionPerformed
-
-    private void btncadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncadastrarActionPerformed
+    private void menucadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menucadastrarMouseClicked
         try {
             Fornecedores obj = new Fornecedores();
 
@@ -112,11 +113,19 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
             FornecedoresDAO dao = new FornecedoresDAO();
             dao.Cadastrar(obj);
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+            
+            txtempresa.setText(null);
+            txtrepresentante.setText(null);
+            txtcnpj.setText(null);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Aconteceu o erro:" +e);
         }
-    }//GEN-LAST:event_btncadastrarActionPerformed
+    }//GEN-LAST:event_menucadastrarMouseClicked
+
+    private void menuprincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuprincipalMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_menuprincipalMouseClicked
 
     /**
      * @param args the command line arguments
@@ -154,13 +163,13 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btncadastrar;
-    private javax.swing.JButton btnmenu;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu menucadastrar;
+    private javax.swing.JMenu menuprincipal;
+    private javax.swing.JMenu menutitulo;
     private javax.swing.JTextField txtcnpj;
     private javax.swing.JTextField txtempresa;
     private javax.swing.JTextField txtrepresentante;

@@ -29,33 +29,31 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtnome = new javax.swing.JTextField();
         txtsenha = new javax.swing.JTextField();
         cbtipo = new javax.swing.JComboBox<>();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        btnmenu = new javax.swing.JButton();
-        btncadastrar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menutitulo = new javax.swing.JMenu();
+        menucadastrar = new javax.swing.JMenu();
+        menuprincipal = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(400, 300));
-        setSize(new java.awt.Dimension(400, 300));
+        setMinimumSize(new java.awt.Dimension(425, 325));
+        setPreferredSize(new java.awt.Dimension(425, 325));
+        setResizable(false);
+        setSize(new java.awt.Dimension(425, 325));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Cadastro de usuarios");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 230, 40));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("UserName:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, -1, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Senha:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, -1, 30));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, 30));
 
         txtnome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtnome.addActionListener(new java.awt.event.ActionListener() {
@@ -63,10 +61,10 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
                 txtnomeActionPerformed(evt);
             }
         });
-        getContentPane().add(txtnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 130, 30));
+        getContentPane().add(txtnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 130, 30));
 
         txtsenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtsenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 130, 30));
+        getContentPane().add(txtsenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 130, 30));
 
         cbtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--------", "Administrador", "Vendedor" }));
         cbtipo.addActionListener(new java.awt.event.ActionListener() {
@@ -74,30 +72,35 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
                 cbtipoActionPerformed(evt);
             }
         });
-        getContentPane().add(cbtipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 130, 30));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 400, 20));
+        getContentPane().add(cbtipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 130, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Tipo:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 227, -1, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, -1, 30));
 
-        btnmenu.setText("Menu");
-        btnmenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnmenuActionPerformed(evt);
+        menutitulo.setText("Cadastro de usuários                                                         ");
+        jMenuBar1.add(menutitulo);
+
+        menucadastrar.setText("Cadastrar");
+        menucadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menucadastrarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 80, -1));
+        jMenuBar1.add(menucadastrar);
 
-        btncadastrar.setText("Cadastrar");
-        btncadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncadastrarActionPerformed(evt);
+        menuprincipal.setText("Menu");
+        menuprincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuprincipalMouseClicked(evt);
             }
         });
-        getContentPane().add(btncadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
+        jMenuBar1.add(menuprincipal);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbtipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbtipoActionPerformed
@@ -108,7 +111,7 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnomeActionPerformed
 
-    private void btncadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncadastrarActionPerformed
+    private void menucadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menucadastrarMouseClicked
         try {
             int tipo;
             
@@ -135,16 +138,20 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
             
             UsuariosDAO dao = new UsuariosDAO();
             dao.Cadastrar(obj);
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");       
+            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+            
+            txtnome.setText(null);
+            txtsenha.setText(null);
+            cbtipo.setSelectedIndex(0);
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Aconteceu o erro:" +e);
         }
-    }//GEN-LAST:event_btncadastrarActionPerformed
+    }//GEN-LAST:event_menucadastrarMouseClicked
 
-    private void btnmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmenuActionPerformed
+    private void menuprincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuprincipalMouseClicked
         this.dispose();
-    }//GEN-LAST:event_btnmenuActionPerformed
+    }//GEN-LAST:event_menuprincipalMouseClicked
 
     /**
      * @param args the command line arguments
@@ -189,14 +196,14 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btncadastrar;
-    private javax.swing.JButton btnmenu;
     private javax.swing.JComboBox<String> cbtipo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu menucadastrar;
+    private javax.swing.JMenu menuprincipal;
+    private javax.swing.JMenu menutitulo;
     private javax.swing.JTextField txtnome;
     private javax.swing.JTextField txtsenha;
     // End of variables declaration//GEN-END:variables

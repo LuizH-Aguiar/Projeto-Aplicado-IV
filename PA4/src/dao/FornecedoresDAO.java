@@ -7,8 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import jdbc.ConnectionFactory;
 import model.Fornecedores;
 
@@ -28,7 +27,6 @@ public class FornecedoresDAO {
     public void Cadastrar(Fornecedores obj) {
         try {
             String sql = "insert into Fornecedores (FornecedorEmpresa , FornecedorRepresentante , FornecedorCNPJ ) values (?,?,?) ";
-
             PreparedStatement stmt = conexao.prepareStatement(sql);
 
             stmt.setString(1, obj.getEmpresa());
@@ -47,8 +45,6 @@ public class FornecedoresDAO {
     public void Alterar(Fornecedores obj) {
         try {
             String sql = "update Fornecedores set FornecedorEmpresa=?, FornecedorRepresentante=?, FornecedorCNPJ=? where idFornecedor =? ";
-
-            //organizar o cmd sql
             PreparedStatement stmt = conexao.prepareStatement(sql);
 
             stmt.setString(1, obj.getEmpresa());
@@ -70,10 +66,9 @@ public class FornecedoresDAO {
     public void Excluir(Fornecedores obj) {
         try {
             String sql = "delete from Fornecedores where idFornecedor=? ";
-
             PreparedStatement stmt = conexao.prepareStatement(sql);
 
-            //Pegando o codigo do cliente para excluir
+            //Pegando o codigo do fornecedor para excluir
             stmt.setInt(1, obj.getCod_fornecedor());
 
             stmt.execute();
@@ -84,62 +79,65 @@ public class FornecedoresDAO {
         }
     }
 
-    //Metodo lista todos fornecedores
-    public List Listar() {
-
+    //Metodo que lista todos os fornecedores
+    public DefaultTableModel Listar() {
         try {
-
-            List<Fornecedores> lista = new ArrayList<>();
             String sql = "select * from Fornecedores";
             PreparedStatement stmt = conexao.prepareStatement(sql);
-
+            
             ResultSet rs = stmt.executeQuery();
 
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Código");
+            model.addColumn("Empresa");
+            model.addColumn("Representante");
+            model.addColumn("CNPJ");
+            model.setNumRows(0);
+
             while (rs.next()) {
-                Fornecedores obj = new Fornecedores();
-
-                obj.setCod_fornecedor(rs.getInt("idFornecedor"));
-                obj.setEmpresa(rs.getString("FornecedorEmpresa"));
-                obj.setRepresentante(rs.getString("FornecedorRepresentante"));
-                obj.setCnpj(rs.getInt("FornecedorCNPJ"));
-
-                lista.add(obj);
+                model.addRow(new Object[]{
+                    rs.getInt("idFornecedor") + "",
+                    rs.getString("FornecedorEmpresa") + "",
+                    rs.getString("FornecedorRepresentante") + "",
+                    rs.getInt("FornecedorCNPJ") + ""
+                });
             }
+            
             stmt.close();
-            return lista;
+            return model;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
-    //Metodo que busca fornecedores por nome
-    public List BuscarFornecedorPorNome(String nome) {
-
+    //Metodo que busca fornecedores
+    public DefaultTableModel Buscar(String busca) {
         try {
-
-            List<Fornecedores> lista = new ArrayList<>();
-            String sql = "select * from Fornecedores where nome like '%?%'";
+            String sql = "select * from Fornecedores where FornecedorEmpresa like ?";
             PreparedStatement stmt = conexao.prepareStatement(sql);
             
-            stmt.setString(1, nome);
-
+            stmt.setString(1, ("%"+busca+"%"));
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                Fornecedores obj = new Fornecedores();
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Código");
+            model.addColumn("Empresa");
+            model.addColumn("Representante");
+            model.addColumn("CNPJ");
+            model.setNumRows(0);
 
-                obj.setCod_fornecedor(rs.getInt("idFornecedor"));
-                obj.setEmpresa(rs.getString("FornecedorEmpresa"));
-                obj.setRepresentante(rs.getString("FornecedorRepresentante"));
-                obj.setCnpj(rs.getInt("FornecedorCNPJ"));
-                
-                lista.add(obj);
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("idFornecedor") + "",
+                    rs.getString("FornecedorEmpresa") + "",
+                    rs.getString("FornecedorRepresentante") + "",
+                    rs.getInt("FornecedorCNPJ") + ""
+                });
             }
             
             stmt.close();
-            return lista;
+            return model;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

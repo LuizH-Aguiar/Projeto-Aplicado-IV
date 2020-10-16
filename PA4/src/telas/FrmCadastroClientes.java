@@ -32,15 +32,11 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtnome = new javax.swing.JTextField();
         txtendereco = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        btnmenu = new javax.swing.JButton();
-        btncadastrar = new javax.swing.JButton();
         txtcpf = new javax.swing.JTextField();
         txtcidade = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -48,21 +44,32 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtcredito = new javax.swing.JTextField();
         cbuf = new javax.swing.JComboBox<>();
+        ftxtcpf = new javax.swing.JFormattedTextField();
+        try{
+            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("###.###.###-##");
+            ftxtcpf = new javax.swing.JFormattedTextField(data);
+        }
+        catch (Exception e){
+        }
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menutitulo = new javax.swing.JMenu();
+        menucadastrar = new javax.swing.JMenu();
+        menuprincipal = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(425, 325));
+        setPreferredSize(new java.awt.Dimension(425, 325));
+        setResizable(false);
+        setSize(new java.awt.Dimension(425, 325));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Cadastro de clientes");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 220, 40));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Nome:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 50, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 50, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("CPF:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 40, 30));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 40, 30));
 
         txtnome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtnome.addActionListener(new java.awt.event.ActionListener() {
@@ -70,31 +77,14 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
                 txtnomeActionPerformed(evt);
             }
         });
-        getContentPane().add(txtnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 330, 30));
+        getContentPane().add(txtnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 280, 30));
 
         txtendereco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtendereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 300, 30));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 400, 20));
+        getContentPane().add(txtendereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 280, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("UF:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 30, 30));
-
-        btnmenu.setText("Menu");
-        btnmenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnmenuActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 80, -1));
-
-        btncadastrar.setText("Cadastrar");
-        btncadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncadastrarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btncadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 30, 30));
 
         txtcpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtcpf.addActionListener(new java.awt.event.ActionListener() {
@@ -102,41 +92,71 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
                 txtcpfActionPerformed(evt);
             }
         });
-        getContentPane().add(txtcpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 110, 30));
+        getContentPane().add(txtcpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 110, 30));
 
         txtcidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtcidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 130, 30));
+        getContentPane().add(txtcidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 110, 30));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Cidade:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 50, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 50, 30));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Endereço:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 70, 30));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, 30));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Crédito:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 60, 30));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 60, 30));
 
         txtcredito.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtcredito, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 130, 30));
+        txtcredito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtcreditoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtcredito, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 90, 30));
 
-        cbuf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
-        getContentPane().add(cbuf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 50, 30));
+        cbuf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        getContentPane().add(cbuf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 50, 30));
+
+        ftxtcpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        getContentPane().add(ftxtcpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 110, 30));
+
+        menutitulo.setText("Cadastro de clientes                                                          ");
+        jMenuBar1.add(menutitulo);
+
+        menucadastrar.setText("Cadastrar");
+        menucadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menucadastrarMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menucadastrar);
+
+        menuprincipal.setText("Menu");
+        menuprincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuprincipalMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuprincipal);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtnomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnomeActionPerformed
 
-    private void btnmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmenuActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnmenuActionPerformed
+    private void txtcpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcpfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcpfActionPerformed
 
-    private void btncadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncadastrarActionPerformed
+    private void menucadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menucadastrarMouseClicked
         try {
             int uf;
             
@@ -242,15 +262,25 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
             ClientesDAO dao = new ClientesDAO();
             dao.Cadastrar(obj);
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+            
+            txtnome.setText(null);
+            txtcpf.setText(null);
+            txtcidade.setText(null);
+            txtendereco.setText(null);
+            txtcredito.setText(null);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Aconteceu o erro:" +e);
         }
-    }//GEN-LAST:event_btncadastrarActionPerformed
+    }//GEN-LAST:event_menucadastrarMouseClicked
 
-    private void txtcpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcpfActionPerformed
+    private void menuprincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuprincipalMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_menuprincipalMouseClicked
+
+    private void txtcreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcreditoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtcpfActionPerformed
+    }//GEN-LAST:event_txtcreditoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,17 +318,18 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btncadastrar;
-    private javax.swing.JButton btnmenu;
     private javax.swing.JComboBox<String> cbuf;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JFormattedTextField ftxtcpf;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu menucadastrar;
+    private javax.swing.JMenu menuprincipal;
+    private javax.swing.JMenu menutitulo;
     private javax.swing.JTextField txtcidade;
     private javax.swing.JTextField txtcpf;
     private javax.swing.JTextField txtcredito;

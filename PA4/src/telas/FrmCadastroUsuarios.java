@@ -42,7 +42,6 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(425, 325));
-        setPreferredSize(new java.awt.Dimension(425, 325));
         setResizable(false);
         setSize(new java.awt.Dimension(425, 325));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -72,11 +71,11 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
                 cbtipoActionPerformed(evt);
             }
         });
-        getContentPane().add(cbtipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 130, 30));
+        getContentPane().add(cbtipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 130, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Tipo:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, -1, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, -1, 30));
 
         menutitulo.setText("Cadastro de usuários                                                         ");
         jMenuBar1.add(menutitulo);
@@ -113,32 +112,24 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
 
     private void menucadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menucadastrarMouseClicked
         try {
-            int tipo;
-            
             Usuarios obj = new Usuarios();
             
             obj.setNome(txtnome.getText());
             obj.setSenha(txtsenha.getText());
             
-            tipo = cbtipo.getSelectedIndex();
+            int tipo = cbtipo.getSelectedIndex();
             
-            switch (tipo){
-                case 0:
-                System.out.println("Selecione o tipo de usuário");
-                break;
+            if(tipo == 0){
+                JOptionPane.showMessageDialog(null, "Selecione o tipo");
+            } else {
+                obj.setTipo(cbtipo.getItemAt(tipo));
+                
+                UsuariosDAO dao = new UsuariosDAO();
+                dao.Cadastrar(obj);
+                JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 
-                case 1:
-                obj.setTipo("Administrador");
-                break;
-
-                case 2:
-                obj.setTipo("Vendedor");
-                break;
+                this.dispose();
             }
-            
-            UsuariosDAO dao = new UsuariosDAO();
-            dao.Cadastrar(obj);
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
             
             txtnome.setText(null);
             txtsenha.setText(null);

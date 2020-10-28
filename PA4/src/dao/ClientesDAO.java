@@ -31,7 +31,7 @@ public class ClientesDAO {
             PreparedStatement stmt = conexao.prepareStatement(sql);
             
             stmt.setString(1, obj.getNome());
-            stmt.setInt(2, obj.getCpf());
+            stmt.setString(2, obj.getCpf());
             stmt.setString(3, obj.getUf());
             stmt.setString(4, obj.getCidade());
             stmt.setString(5, obj.getEndereco());
@@ -54,7 +54,7 @@ public class ClientesDAO {
             PreparedStatement stmt = conexao.prepareStatement(sql);
 
             stmt.setString(1, obj.getNome());
-            stmt.setInt(2, obj.getCpf());
+            stmt.setString(2, obj.getCpf());
             stmt.setString(3, obj.getUf());
             stmt.setString(4, obj.getCidade());
             stmt.setString(5, obj.getEndereco());
@@ -113,7 +113,7 @@ public class ClientesDAO {
                 model.addRow(new Object[]{
                     rs.getInt("idCliente") + "",
                     rs.getString("ClienteNome") + "",
-                    rs.getInt("ClienteCPF") + "",
+                    rs.getString("ClienteCPF") + "",
                     rs.getString("ClienteUF") + "",
                     rs.getString("ClienteCidade") + "",
                     rs.getString("ClienteEndereço") + "",
@@ -154,7 +154,7 @@ public class ClientesDAO {
                 model.addRow(new Object[]{
                     rs.getInt("idCliente") + "",
                     rs.getString("ClienteNome") + "",
-                    rs.getInt("ClienteCPF") + "",
+                    rs.getString("ClienteCPF") + "",
                     rs.getString("ClienteUF") + "",
                     rs.getString("ClienteCidade") + "",
                     rs.getString("ClienteEndereço") + "",

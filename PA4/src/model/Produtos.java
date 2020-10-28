@@ -13,6 +13,7 @@ public class Produtos {
     private String nome;
     private double valorCompra;
     private double valorVenda;
+    private String codBarra;
     private String descricao;
     private int quantidade;
 
@@ -47,6 +48,14 @@ public class Produtos {
     public void setValorVenda(double valorVenda) {
         this.valorVenda = valorVenda;
     }
+    
+    public String getCodBarra() {
+        return codBarra;
+    }
+
+    public void setCodBarra(String codBarra) {
+        this.codBarra = codBarra;
+    }
 
     public String getDescricao() {
         return descricao;
@@ -63,4 +72,5 @@ public class Produtos {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+
 }

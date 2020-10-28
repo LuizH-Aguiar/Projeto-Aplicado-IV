@@ -31,7 +31,7 @@ public class FornecedoresDAO {
 
             stmt.setString(1, obj.getEmpresa());
             stmt.setString(2, obj.getRepresentante());
-            stmt.setInt(3, obj.getCnpj());
+            stmt.setString(3, obj.getCnpj());
           
             stmt.execute();
             stmt.close();
@@ -49,7 +49,7 @@ public class FornecedoresDAO {
 
             stmt.setString(1, obj.getEmpresa());
             stmt.setString(2, obj.getRepresentante());
-            stmt.setInt(3, obj.getCnpj());
+            stmt.setString(3, obj.getCnpj());
 
             //Pegando o codigo do fornecedor para alterar
             stmt.setInt(4, obj.getCod_fornecedor());
@@ -99,7 +99,7 @@ public class FornecedoresDAO {
                     rs.getInt("idFornecedor") + "",
                     rs.getString("FornecedorEmpresa") + "",
                     rs.getString("FornecedorRepresentante") + "",
-                    rs.getInt("FornecedorCNPJ") + ""
+                    rs.getString("FornecedorCNPJ") + ""
                 });
             }
             
@@ -132,7 +132,7 @@ public class FornecedoresDAO {
                     rs.getInt("idFornecedor") + "",
                     rs.getString("FornecedorEmpresa") + "",
                     rs.getString("FornecedorRepresentante") + "",
-                    rs.getInt("FornecedorCNPJ") + ""
+                    rs.getString("FornecedorCNPJ") + ""
                 });
             }
             

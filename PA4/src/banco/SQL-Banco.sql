@@ -27,7 +27,7 @@ create table Fornecedores(
 idFornecedor int not null auto_increment,
 FornecedorEmpresa varchar(45) not null,
 FornecedorRepresentante varchar(45),
-FornecedorCNPJ int not null,
+FornecedorCNPJ varchar(14),
 primary key (idFornecedor)
 );
 
@@ -39,8 +39,9 @@ idProduto int not null auto_increment,
 ProdutoNome varchar(45) not null,
 ProdutoValorCompra decimal(18,2) not null,
 ProdutoValorVenda decimal(18,2) not null,
+ProdutoCodBarra varchar(13) not null,
 ProdutoDescricao varchar(250) not null,
-ProdutoQuantidade int,
+ProdutoQuantidade int not null,
 primary key (idProduto)
 );
 
@@ -50,7 +51,7 @@ primary key (idProduto)
 create table Clientes(
 idCliente int not null auto_increment,
 ClienteNome varchar(45) not null,
-ClienteCPF int not null,
+ClienteCPF varchar(11),
 ClienteUF varchar(2) not null,
 ClienteCidade varchar(45) not null,
 ClienteEndereço varchar(100) not null,
@@ -116,4 +117,4 @@ constraint FK_ItemsCompras_Produto foreign key (ItemIDProdutoCompra) references 
 constraint FK_ItemsCompras_Compra foreign key (ItemIDCompra) references Compras (idCompra)
 );
 
-insert into Usuarios values (1,'Admin','Admin','Administrador');
+insert into Usuarios values (1,'A','A','Administrador');

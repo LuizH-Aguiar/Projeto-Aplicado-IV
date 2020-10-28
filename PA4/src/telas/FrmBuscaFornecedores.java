@@ -5,6 +5,7 @@ package telas;
 
 import dao.FornecedoresDAO;
 import javax.swing.table.DefaultTableModel;
+import model.Fornecedores;
 
 /**
  *
@@ -34,7 +35,6 @@ public class FrmBuscaFornecedores extends javax.swing.JFrame {
         txtbusca = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,11 +85,8 @@ public class FrmBuscaFornecedores extends javax.swing.JFrame {
         txtbusca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         getContentPane().add(txtbusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 243, -1));
 
-        jMenu1.setText("Consulta de fornecedores                                                                                                                                                            ");
+        jMenu1.setText("Consulta de fornecedores                                                                                                                                                                          ");
         jMenuBar1.add(jMenu1);
-
-        jMenu3.setText("Editar");
-        jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Menu");
         jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -120,7 +117,20 @@ public class FrmBuscaFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnbuscaActionPerformed
 
     private void tabelafornecedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelafornecedoresMouseClicked
-
+        
+        if(tabelafornecedores.getSelectedRow() != -1){
+            FrmEditaFornecedores EditaFornecedores = new FrmEditaFornecedores();
+            Fornecedores fornecedor = new Fornecedores();
+            
+            fornecedor.setCod_fornecedor(Integer.parseInt(tabelafornecedores.getValueAt(tabelafornecedores.getSelectedRow(), 0).toString()));
+            fornecedor.setEmpresa(tabelafornecedores.getValueAt(tabelafornecedores.getSelectedRow(), 1).toString());
+            fornecedor.setRepresentante((tabelafornecedores.getValueAt(tabelafornecedores.getSelectedRow(), 2).toString()));
+            fornecedor.setCnpj(tabelafornecedores.getValueAt(tabelafornecedores.getSelectedRow(), 3).toString());
+            
+            EditaFornecedores.preencher(fornecedor);
+            
+            EditaFornecedores.setVisible(true);
+        }
     }//GEN-LAST:event_tabelafornecedoresMouseClicked
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
@@ -179,7 +189,6 @@ public class FrmBuscaFornecedores extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnbusca;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;

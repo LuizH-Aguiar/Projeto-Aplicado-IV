@@ -4,23 +4,31 @@ Produzido por: Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
 package telas;
 
 import dao.ClientesDAO;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import model.Clientes;
 
 /**
  *
- * @author Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
+ * @author Fabiana Nunes
  */
-public class FrmCadastroClientes extends javax.swing.JFrame {
+public class FrmEditaClientes extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrmCadastroClientes
+     * Creates new form FrmEditaClientes
      */
-    public FrmCadastroClientes() {
+    public FrmEditaClientes() {
         initComponents();
+    }
+    
+    void preencher(Clientes cliente) {
+        
+        txtcodigo.setText(String.valueOf(cliente.getCod_cliente()));
+        txtnome.setText(cliente.getNome());
+        ftxtcpf.setText(cliente.getCpf());
+        txtcredito.setText(String.valueOf(cliente.getCredito()));
+        txtcidade.setText(cliente.getCidade());
+        txtendereco.setText(cliente.getEndereco());
+        cbuf.setSelectedItem(cliente.getUf());
     }
 
     /**
@@ -50,24 +58,24 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
         }
         catch (Exception e){
         }
+        jLabel8 = new javax.swing.JLabel();
+        txtcodigo = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         menutitulo = new javax.swing.JMenu();
-        menucadastrar = new javax.swing.JMenu();
-        menuprincipal = new javax.swing.JMenu();
+        menuexcluir = new javax.swing.JMenu();
+        menusalvar = new javax.swing.JMenu();
+        menuvoltar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(425, 325));
-        setResizable(false);
-        setSize(new java.awt.Dimension(425, 325));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Nome:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 50, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 50, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("CPF:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 40, 30));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 40, 30));
 
         txtnome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtnome.addActionListener(new java.awt.event.ActionListener() {
@@ -75,29 +83,29 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
                 txtnomeActionPerformed(evt);
             }
         });
-        getContentPane().add(txtnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 280, 30));
+        getContentPane().add(txtnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 280, 30));
 
         txtendereco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtendereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 280, 30));
+        getContentPane().add(txtendereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 280, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("UF:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 30, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 30, 30));
 
         txtcidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtcidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 110, 30));
+        getContentPane().add(txtcidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 110, 30));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Cidade:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 50, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 50, 30));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Endereço:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, 30));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, 30));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Crédito:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 60, 30));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 60, 30));
 
         txtcredito.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtcredito.addActionListener(new java.awt.event.ActionListener() {
@@ -105,63 +113,85 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
                 txtcreditoActionPerformed(evt);
             }
         });
-        getContentPane().add(txtcredito, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 90, 30));
+        getContentPane().add(txtcredito, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 90, 30));
 
         cbuf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
-        getContentPane().add(cbuf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 60, 30));
+        getContentPane().add(cbuf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 50, 30));
 
         ftxtcpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(ftxtcpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 110, 30));
+        getContentPane().add(ftxtcpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 110, 30));
 
-        menutitulo.setText("Cadastro de clientes                                                          ");
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("Código do cliente:");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 120, 30));
+
+        txtcodigo.setEditable(false);
+        txtcodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtcodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtcodigoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtcodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 40, 30));
+
+        menutitulo.setText("Alteração e exclusão de clientes                              ");
         jMenuBar1.add(menutitulo);
 
-        menucadastrar.setText("Cadastrar");
-        menucadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+        menuexcluir.setText("Excluir");
+        menuexcluir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menucadastrarMouseClicked(evt);
+                menuexcluirMouseClicked(evt);
             }
         });
-        jMenuBar1.add(menucadastrar);
+        jMenuBar1.add(menuexcluir);
 
-        menuprincipal.setText("Menu");
-        menuprincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+        menusalvar.setText("Salvar");
+        menusalvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuprincipalMouseClicked(evt);
+                menusalvarMouseClicked(evt);
             }
         });
-        jMenuBar1.add(menuprincipal);
+        jMenuBar1.add(menusalvar);
+
+        menuvoltar.setText("Voltar");
+        menuvoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuvoltarMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuvoltar);
 
         setJMenuBar(jMenuBar1);
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtnomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnomeActionPerformed
 
-    private void menucadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menucadastrarMouseClicked
-        try {
-            int uf;
-            String cpf;
-            
-            Clientes obj = new Clientes();
+    private void txtcreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcreditoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcreditoActionPerformed
 
+    private void menusalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menusalvarMouseClicked
+        try {
+            Clientes obj = new Clientes();
+            
+            obj.setCod_cliente(Integer.parseInt(txtcodigo.getText()));
             obj.setNome(txtnome.getText());
             obj.setCidade(txtcidade.getText());
             obj.setEndereco(txtendereco.getText());
             obj.setCredito(Double.parseDouble(txtcredito.getText()));
             obj.setConta(0);
             
-            cpf = ftxtcpf.getText();
+            String cpf = ftxtcpf.getText();
             cpf = cpf.replace(".","");
             cpf = cpf.replace("-","");
             
             obj.setCpf(cpf);
             
-            uf = cbuf.getSelectedIndex();
+            int uf = cbuf.getSelectedIndex();
             
             if(uf == 0){
                 JOptionPane.showMessageDialog(null, "Selecione a UF");
@@ -169,29 +199,44 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
                 obj.setUf(cbuf.getItemAt(uf));
                 
                 ClientesDAO dao = new ClientesDAO();
-                dao.Cadastrar(obj);
-                JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
-
-                txtnome.setText(null);
-                ftxtcpf.setText(null);
-                txtcidade.setText(null);
-                txtendereco.setText(null);
-                txtcredito.setText(null);
-                cbuf.setSelectedIndex(0);
+                dao.Alterar(obj);
+                JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
+                
+                this.dispose();
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Aconteceu o erro:" +e);
         }
-    }//GEN-LAST:event_menucadastrarMouseClicked
+    }//GEN-LAST:event_menusalvarMouseClicked
 
-    private void menuprincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuprincipalMouseClicked
+    private void menuvoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuvoltarMouseClicked
         this.dispose();
-    }//GEN-LAST:event_menuprincipalMouseClicked
+    }//GEN-LAST:event_menuvoltarMouseClicked
 
-    private void txtcreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcreditoActionPerformed
+    private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtcreditoActionPerformed
+    }//GEN-LAST:event_txtcodigoActionPerformed
+
+    private void menuexcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuexcluirMouseClicked
+        try {
+            Clientes obj = new Clientes();
+            obj.setCod_cliente(Integer.parseInt(txtcodigo.getText()));
+            
+            if(false){
+                
+            } else {
+                ClientesDAO dao = new ClientesDAO();
+                dao.Excluir(obj);
+                JOptionPane.showMessageDialog(null, "Registro excluido com sucesso!");
+                
+                this.dispose();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Aconteceu o erro:" +e);
+        }
+    }//GEN-LAST:event_menuexcluirMouseClicked
 
     /**
      * @param args the command line arguments
@@ -210,20 +255,20 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmCadastroClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEditaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmCadastroClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEditaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmCadastroClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEditaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmCadastroClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEditaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmCadastroClientes().setVisible(true);
+                new FrmEditaClientes().setVisible(true);
             }
         });
     }
@@ -237,13 +282,16 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu menucadastrar;
-    private javax.swing.JMenu menuprincipal;
+    private javax.swing.JMenu menuexcluir;
+    private javax.swing.JMenu menusalvar;
     private javax.swing.JMenu menutitulo;
+    private javax.swing.JMenu menuvoltar;
     private javax.swing.JTextField txtcidade;
+    public javax.swing.JTextField txtcodigo;
     private javax.swing.JTextField txtcredito;
     private javax.swing.JTextField txtendereco;
-    private javax.swing.JTextField txtnome;
+    public javax.swing.JTextField txtnome;
     // End of variables declaration//GEN-END:variables
 }

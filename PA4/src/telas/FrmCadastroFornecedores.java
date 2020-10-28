@@ -32,9 +32,15 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtempresa = new javax.swing.JTextField();
-        txtcnpj = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtrepresentante = new javax.swing.JTextField();
+        ftxtcnpj = new javax.swing.JFormattedTextField();
+        try{
+            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("##.###.###/####-##");
+            ftxtcnpj = new javax.swing.JFormattedTextField(data);
+        }
+        catch (Exception e){
+        }
         jMenuBar1 = new javax.swing.JMenuBar();
         menutitulo = new javax.swing.JMenu();
         menucadastrar = new javax.swing.JMenu();
@@ -42,7 +48,6 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(425, 325));
-        setPreferredSize(new java.awt.Dimension(425, 325));
         setResizable(false);
         setSize(new java.awt.Dimension(425, 325));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -63,15 +68,13 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
         });
         getContentPane().add(txtempresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 130, 30));
 
-        txtcnpj.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtcnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 130, 30));
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("CNPJ:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 40, 30));
 
         txtrepresentante.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         getContentPane().add(txtrepresentante, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 130, 30));
+        getContentPane().add(ftxtcnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 130, 30));
 
         menutitulo.setText("Cadastro de fornecedores                                                ");
         jMenuBar1.add(menutitulo);
@@ -108,7 +111,13 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
 
             obj.setEmpresa(txtempresa.getText());
             obj.setRepresentante(txtrepresentante.getText());
-            obj.setCnpj(Integer.parseInt(txtcnpj.getText()));
+            
+            String cnpj = ftxtcnpj.getText();
+            cnpj = cnpj.replace(".","");
+            cnpj = cnpj.replace("-","");
+            cnpj = cnpj.replace("/","");
+            
+            obj.setCnpj(cnpj);
 
             FornecedoresDAO dao = new FornecedoresDAO();
             dao.Cadastrar(obj);
@@ -116,7 +125,7 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
             
             txtempresa.setText(null);
             txtrepresentante.setText(null);
-            txtcnpj.setText(null);
+            ftxtcnpj.setText(null);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Aconteceu o erro:" +e);
@@ -163,6 +172,7 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField ftxtcnpj;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -170,7 +180,6 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
     private javax.swing.JMenu menucadastrar;
     private javax.swing.JMenu menuprincipal;
     private javax.swing.JMenu menutitulo;
-    private javax.swing.JTextField txtcnpj;
     private javax.swing.JTextField txtempresa;
     private javax.swing.JTextField txtrepresentante;
     // End of variables declaration//GEN-END:variables

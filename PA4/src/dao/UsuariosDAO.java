@@ -7,8 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import jdbc.ConnectionFactory;
@@ -81,7 +79,7 @@ public class UsuariosDAO {
     //Metodo que altera usuarios
     public void Alterar(Usuarios obj) {
         try {
-            String sql = "update Usuarios set UsuarioNome=?, UsuarioSenha=?, UsuarioTipo=?, where idUsuario=? ";
+            String sql = "update Usuarios set UsuarioNome=?, UsuarioSenha=?, UsuarioTipo=? where idUsuario=? ";
             PreparedStatement stmt = conexao.prepareStatement(sql);
 
             stmt.setString(1, obj.getNome());

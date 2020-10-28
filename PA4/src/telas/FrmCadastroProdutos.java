@@ -37,6 +37,8 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        txtcodbarra = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menutitulo = new javax.swing.JMenu();
         menucadastrar = new javax.swing.JMenu();
@@ -44,7 +46,6 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(425, 325));
-        setPreferredSize(new java.awt.Dimension(425, 325));
         setResizable(false);
         setSize(new java.awt.Dimension(425, 325));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -58,7 +59,7 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
         getContentPane().add(txtnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 280, 30));
 
         txtcusto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtcusto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 80, 30));
+        getContentPane().add(txtcusto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 80, 30));
 
         txtvenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtvenda.addActionListener(new java.awt.event.ActionListener() {
@@ -66,10 +67,10 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
                 txtvendaActionPerformed(evt);
             }
         });
-        getContentPane().add(txtvenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 70, 30));
+        getContentPane().add(txtvenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 70, 30));
 
         txtdescricao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtdescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 280, 90));
+        getContentPane().add(txtdescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 280, 80));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Nome:");
@@ -77,15 +78,27 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Custo:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, 30));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, 30));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Valor de venda:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, -1, 30));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, -1, 30));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Descrição:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 70, 30));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 70, 30));
+
+        txtcodbarra.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtcodbarra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtcodbarraActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtcodbarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 250, 30));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Cod. de barras:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, 30));
 
         menutitulo.setText("Cadastro de produtos                                                       ");
         jMenuBar1.add(menutitulo);
@@ -127,6 +140,7 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
             obj.setNome(txtnome.getText());
             obj.setValorCompra(Double.parseDouble(txtcusto.getText()));
             obj.setValorVenda(Double.parseDouble(txtvenda.getText()));
+            obj.setCodBarra(txtcodbarra.getText());
             obj.setDescricao(txtdescricao.getText());
 
             ProdutosDAO dao = new ProdutosDAO();
@@ -136,6 +150,7 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
             txtnome.setText(null);
             txtcusto.setText(null);
             txtvenda.setText(null);
+            txtcodbarra.setText(null);
             txtdescricao.setText(null);
 
         } catch (Exception e) {
@@ -146,6 +161,10 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
     private void menuprincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuprincipalMouseClicked
         this.dispose();
     }//GEN-LAST:event_menuprincipalMouseClicked
+
+    private void txtcodbarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodbarraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcodbarraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,6 +203,7 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -191,6 +211,7 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
     private javax.swing.JMenu menucadastrar;
     private javax.swing.JMenu menuprincipal;
     private javax.swing.JMenu menutitulo;
+    private javax.swing.JTextField txtcodbarra;
     private javax.swing.JTextField txtcusto;
     private javax.swing.JTextField txtdescricao;
     private javax.swing.JTextField txtnome;

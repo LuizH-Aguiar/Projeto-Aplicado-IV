@@ -12,7 +12,7 @@ public class Fornecedores {
     private int Cod_fornecedor;
     private String empresa;
     private String representante;
-    private int cnpj;
+    private String cnpj;
 
     public int getCod_fornecedor() {
         return Cod_fornecedor;
@@ -38,11 +38,11 @@ public class Fornecedores {
         this.representante = representante;
     }
 
-    public int getCnpj() {
+    public String getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(int cnpj) {
+    public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
 

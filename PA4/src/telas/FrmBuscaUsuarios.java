@@ -5,6 +5,7 @@ package telas;
 
 import dao.UsuariosDAO;
 import javax.swing.table.DefaultTableModel;
+import model.Usuarios;
 
 /**
  *
@@ -119,7 +120,20 @@ public class FrmBuscaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnbuscaActionPerformed
 
     private void tabelausuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelausuariosMouseClicked
-
+        
+        if(tabelausuarios.getSelectedRow() != -1){
+            FrmEditaUsuarios EditaUsuarios = new FrmEditaUsuarios();
+            Usuarios usuario = new Usuarios();
+            
+            usuario.setCod_usuario(Integer.parseInt(tabelausuarios.getValueAt(tabelausuarios.getSelectedRow(), 0).toString()));
+            usuario.setNome(tabelausuarios.getValueAt(tabelausuarios.getSelectedRow(), 1).toString());
+            usuario.setSenha((tabelausuarios.getValueAt(tabelausuarios.getSelectedRow(), 2).toString()));
+            usuario.setTipo(tabelausuarios.getValueAt(tabelausuarios.getSelectedRow(), 3).toString());
+            
+            EditaUsuarios.preencher(usuario);
+            
+            EditaUsuarios.setVisible(true);
+        }
     }//GEN-LAST:event_tabelausuariosMouseClicked
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked

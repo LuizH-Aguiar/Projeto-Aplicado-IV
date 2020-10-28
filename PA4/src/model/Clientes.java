@@ -11,7 +11,7 @@ public class Clientes {
     
     private int Cod_cliente;
     private String nome;
-    private int cpf;
+    private String cpf;
     private String uf;
     private String cidade;
     private String endereco;
@@ -34,11 +34,11 @@ public class Clientes {
         this.nome = nome;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

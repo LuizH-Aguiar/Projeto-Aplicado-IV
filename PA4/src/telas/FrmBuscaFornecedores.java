@@ -138,11 +138,11 @@ public class FrmBuscaFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu4MouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-                try {
+        try {
 
             FornecedoresDAO dao = new FornecedoresDAO();
 
-            DefaultTableModel model = dao.Listar();
+            DefaultTableModel model = dao.Buscar("");
 
             tabelafornecedores.setModel(model);
             txtbusca.setText(null);

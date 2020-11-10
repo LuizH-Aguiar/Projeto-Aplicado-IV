@@ -90,7 +90,6 @@ public class FornecedoresDAO {
             DefaultTableModel model = new DefaultTableModel();
             model.addColumn("Código");
             model.addColumn("Empresa");
-            model.addColumn("Representante");
             model.addColumn("CNPJ");
             model.setNumRows(0);
 
@@ -98,7 +97,6 @@ public class FornecedoresDAO {
                 model.addRow(new Object[]{
                     rs.getInt("idFornecedor") + "",
                     rs.getString("FornecedorEmpresa") + "",
-                    rs.getString("FornecedorRepresentante") + "",
                     rs.getString("FornecedorCNPJ") + ""
                 });
             }

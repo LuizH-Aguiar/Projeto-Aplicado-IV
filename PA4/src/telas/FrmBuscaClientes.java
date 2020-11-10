@@ -104,7 +104,6 @@ public class FrmBuscaClientes extends javax.swing.JFrame {
 
     private void btnbuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscaActionPerformed
         try {
-
             ClientesDAO dao = new ClientesDAO();
 
             DefaultTableModel model = dao.Buscar(txtbusca.getText());

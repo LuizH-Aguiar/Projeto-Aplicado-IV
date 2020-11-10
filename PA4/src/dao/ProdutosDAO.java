@@ -96,22 +96,14 @@ public class ProdutosDAO {
             DefaultTableModel model = new DefaultTableModel();
             model.addColumn("Código");
             model.addColumn("Nome");
-            model.addColumn("Custo");
-            model.addColumn("Venda");
             model.addColumn("Cod. Barra");
-            model.addColumn("Descrição");
-            model.addColumn("Quantidade");
             model.setNumRows(0);
 
             while (rs.next()) {
                 model.addRow(new Object[]{
                     rs.getInt("idProduto") + "",
                     rs.getString("ProdutoNome") + "",
-                    rs.getDouble("ProdutoValorCompra") + "",
-                    rs.getDouble("ProdutoValorVenda") + "",
-                    rs.getString("ProdutoCodBarra") + "",
-                    rs.getString("ProdutoDescricao") + "",
-                    rs.getInt("ProdutoQuantidade") + ""
+                    rs.getString("ProdutoCodBarra") + ""
                 });
             }
             
@@ -159,6 +151,36 @@ public class ProdutosDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    
+    //Metodo que altera o estoque de produtos
+    public void AlterarEstoque(Produtos obj) {
+        try {
+            //Pega o estoque atual
+            String sql = "select ProdutoQuantidade from Produtos where idProduto =?";
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setDouble(1, obj.getCod_produto());
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            rs.first();
+            int Estoque = rs.getInt("ProdutoQuantidade") + 0;
+            
+            //Muda o estoque
+            sql = "update Produtos set ProdutoQuantidade =? where idProduto =? ";
+            stmt = conexao.prepareStatement(sql);
+
+            stmt.setInt(1, obj.getQuantidade());
+            
+            //Pegando o codigo do produto para alterar
+            stmt.setDouble(2, obj.getCod_produto());
+
+            stmt.execute();
+            stmt.close();
+
+        } catch (SQLException erro) {
+            throw new RuntimeException(erro);
         }
     }
 }

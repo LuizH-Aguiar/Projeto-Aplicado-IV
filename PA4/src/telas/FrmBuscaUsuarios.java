@@ -145,7 +145,7 @@ public class FrmBuscaUsuarios extends javax.swing.JFrame {
             
             UsuariosDAO dao = new UsuariosDAO();
             
-            DefaultTableModel model = dao.Listar();
+            DefaultTableModel model = dao.Buscar("");
             
             tabelausuarios.setModel(model);
             txtbusca.setText(null);

@@ -144,7 +144,7 @@ public class FrmBuscaProdutos extends javax.swing.JFrame {
 
             ProdutosDAO dao = new ProdutosDAO();
 
-            DefaultTableModel model = dao.Listar();
+            DefaultTableModel model = dao.Buscar("");
 
             tabelaprodutos.setModel(model);
             txtbusca.setText(null);

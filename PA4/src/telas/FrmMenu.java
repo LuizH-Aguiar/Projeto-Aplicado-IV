@@ -28,26 +28,24 @@ public class FrmMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menucadastro = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menubusca = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
+        menuestoque = new javax.swing.JMenu();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        menusair = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 400));
-        setPreferredSize(new java.awt.Dimension(500, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(500, 400));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -57,7 +55,7 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jMenu1.setText("Cadastro");
+        menucadastro.setText("Cadastro");
 
         jMenuItem1.setText("Clientes");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -65,7 +63,7 @@ public class FrmMenu extends javax.swing.JFrame {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        menucadastro.add(jMenuItem1);
 
         jMenuItem9.setText("Fornecedores");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
@@ -73,7 +71,7 @@ public class FrmMenu extends javax.swing.JFrame {
                 jMenuItem9ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem9);
+        menucadastro.add(jMenuItem9);
 
         jMenuItem7.setText("Produtos");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -81,7 +79,7 @@ public class FrmMenu extends javax.swing.JFrame {
                 jMenuItem7ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem7);
+        menucadastro.add(jMenuItem7);
 
         jMenuItem2.setText("Usuários");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -89,11 +87,11 @@ public class FrmMenu extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        menucadastro.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menucadastro);
 
-        jMenu2.setText("Busca");
+        menubusca.setText("Busca");
 
         jMenuItem3.setText("Cliente");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -101,7 +99,7 @@ public class FrmMenu extends javax.swing.JFrame {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        menubusca.add(jMenuItem3);
 
         jMenuItem10.setText("Fornecedores");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +107,7 @@ public class FrmMenu extends javax.swing.JFrame {
                 jMenuItem10ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem10);
+        menubusca.add(jMenuItem10);
 
         jMenuItem8.setText("Produtos");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +115,7 @@ public class FrmMenu extends javax.swing.JFrame {
                 jMenuItem8ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem8);
+        menubusca.add(jMenuItem8);
 
         jMenuItem4.setText("Usuários");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -125,20 +123,23 @@ public class FrmMenu extends javax.swing.JFrame {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        menubusca.add(jMenuItem4);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menubusca);
 
-        jMenu6.setText("Tela de Vendas");
-        jMenuBar1.add(jMenu6);
+        menuestoque.setText("Estoque");
 
-        jMenu3.setText("Relatório");
-        jMenuBar1.add(jMenu3);
+        jMenuItem11.setText("Entrada de estoque");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        menuestoque.add(jMenuItem11);
 
-        jMenu4.setText("Configurações");
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(menuestoque);
 
-        jMenu5.setText("Sair");
+        menusair.setText("Sair");
 
         jMenuItem5.setText("Tela de login");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +147,7 @@ public class FrmMenu extends javax.swing.JFrame {
                 jMenuItem5ActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem5);
+        menusair.add(jMenuItem5);
 
         jMenuItem6.setText("Fechar sistema");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -154,9 +155,9 @@ public class FrmMenu extends javax.swing.JFrame {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem6);
+        menusair.add(jMenuItem6);
 
-        jMenuBar1.add(jMenu5);
+        jMenuBar1.add(menusair);
 
         setJMenuBar(jMenuBar1);
 
@@ -210,6 +211,10 @@ public class FrmMenu extends javax.swing.JFrame {
         new FrmBuscaFornecedores().setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        new FrmEstoqueEntrada().setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -247,15 +252,10 @@ public class FrmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -264,5 +264,9 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenu menubusca;
+    private javax.swing.JMenu menucadastro;
+    private javax.swing.JMenu menuestoque;
+    private javax.swing.JMenu menusair;
     // End of variables declaration//GEN-END:variables
 }

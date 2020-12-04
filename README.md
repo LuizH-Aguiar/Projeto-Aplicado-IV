@@ -1,2 +1,2 @@
 # Projeto Aplicado-IV de Engenharia de Computação
-O objetivo do projeto é a criação de uma interface de controle de estoques para lojas, utilizando Java e integrando o sistema com MySQL. No sistema, é possível ver todos os produtos da loja, com seus códigos, quantidade, preços e seus fornecedores. Também será possível analisar o lucro da loja, mediante o número de vendas de cada produto e o preço inicial pago pelo mesmo.
+O objetivo do projeto é a criação de um sistema de gerenciamento para lojas, utilizando Java e integrando o sistema com um banco de dados (MySQL). No sistema, é possível ver todos os produtos da loja, com seus códigos, quantidade, preços e seus fornecedores. Além disso, também é possível realizar vendas e verificar o acesso ao sistema. 

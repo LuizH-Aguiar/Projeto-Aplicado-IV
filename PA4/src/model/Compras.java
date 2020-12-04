@@ -13,7 +13,7 @@ public class Compras {
     private double valor;
     private String data;
     private int Cod_fornecedor;
-    private int Cod_Usuario;
+    private int Cod_usuario;
 
     public int getCod_compra() {
         return Cod_compra;
@@ -47,11 +47,11 @@ public class Compras {
         this.Cod_fornecedor = Cod_fornecedor;
     }
 
-    public int getCod_Usuario() {
-        return Cod_Usuario;
+    public int getCod_usuario() {
+        return Cod_usuario;
     }
 
-    public void setCod_Usuario(int Cod_Usuario) {
-        this.Cod_Usuario = Cod_Usuario;
+    public void setCod_usuario(int Cod_Usuario) {
+        this.Cod_usuario = Cod_Usuario;
     }
 }

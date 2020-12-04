@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import jdbc.ConnectionFactory;
 import model.Clientes;
@@ -66,7 +67,9 @@ public class ClientesDAO {
 
             stmt.execute();
             stmt.close();
-
+            
+            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
+            
         } catch (SQLException erro) {
             throw new RuntimeException(erro);
         }
@@ -75,9 +78,21 @@ public class ClientesDAO {
     //Metodo que exclui clientes
     public void Excluir(Clientes obj) {
         try {
-            String sql = "delete from Clientes where idCliente =? ";
-
+            String sql = "select VendaIDCliente from Vendas where VendaIDCliente = ?";
             PreparedStatement stmt = conexao.prepareStatement(sql);
+            
+            stmt.setInt(1, obj.getCod_cliente());
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Item não pode ser excluído, pois é utilizado em registros");
+                return;
+            } else {
+                JOptionPane.showMessageDialog(null, "Registro excluido com sucesso!");
+            }
+            
+            sql = "delete from Clientes where idCliente =? ";
+            stmt = conexao.prepareStatement(sql);
             
             //Pegando o codigo do cliente para excluir
             stmt.setInt(1, obj.getCod_cliente());
@@ -91,35 +106,47 @@ public class ClientesDAO {
     }
     
     //Metodo que lista todos os clientes
-    public DefaultTableModel Listar() {
+    public DefaultTableModel Listar(boolean pag) {
         try {
             String sql = "select * from Clientes";
             PreparedStatement stmt = conexao.prepareStatement(sql);
             
             ResultSet rs = stmt.executeQuery();
-            
             DefaultTableModel model = new DefaultTableModel();
+            
             model.addColumn("Código");
             model.addColumn("Nome");
             model.addColumn("CPF");
-            model.addColumn("UF");
-            model.addColumn("Cidade");
-            model.addColumn("Endereço");
+            if (!pag) model.addColumn("UF");
+            if (!pag) model.addColumn("Cidade");
+            if (!pag) model.addColumn("Endereço");
             model.addColumn("Credito");
             model.addColumn("Saldo");
             model.setNumRows(0);
-
-            while (rs.next()) {
-                model.addRow(new Object[]{
-                    rs.getInt("idCliente") + "",
-                    rs.getString("ClienteNome") + "",
-                    rs.getString("ClienteCPF") + "",
-                    rs.getString("ClienteUF") + "",
-                    rs.getString("ClienteCidade") + "",
-                    rs.getString("ClienteEndereço") + "",
-                    rs.getDouble("ClienteCredito") + "",
-                    rs.getDouble("ClienteConta") + ""
-                });
+            
+            if (!pag) {
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getInt("idCliente") + "",
+                        rs.getString("ClienteNome") + "",
+                        rs.getString("ClienteCPF") + "",
+                        rs.getString("ClienteUF") + "",
+                        rs.getString("ClienteCidade") + "",
+                        rs.getString("ClienteEndereço") + "",
+                        rs.getDouble("ClienteCredito") + "",
+                        rs.getDouble("ClienteConta") + ""
+                    });
+                }
+            } else {
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getInt("idCliente") + "",
+                        rs.getString("ClienteNome") + "",
+                        rs.getString("ClienteCPF") + "",
+                        rs.getDouble("ClienteCredito") + "",
+                        rs.getDouble("ClienteConta") + ""
+                    });
+                }
             }
             
             stmt.close();
@@ -131,36 +158,58 @@ public class ClientesDAO {
     }
 
     //Metodo que busca usuarios
-    public DefaultTableModel Buscar(String busca) {
+    public DefaultTableModel Buscar(String busca, int mode, boolean pag) {
         try {
-            String sql = "select * from Clientes where ClienteNome like ?";
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+            String sql = "";
+            PreparedStatement stmt = null;
             
-            stmt.setString(1, ("%"+busca+"%"));
+            if (mode == 0) {        //Busca por codigo, nome ou cpf
+                sql = "select * from Clientes where ClienteNome like ? or ClienteCPF like ?";
+                stmt = conexao.prepareStatement(sql);
+                stmt.setString(1, ("%"+busca+"%"));
+                stmt.setString(2, ("%"+busca+"%"));
+            } else if (mode == 1) { //Busca por cpf
+                sql = "select * from Clientes where ClienteCPF like ?";
+                stmt = conexao.prepareStatement(sql);
+                stmt.setString(1, (""+busca+""));
+            }
+            
             ResultSet rs = stmt.executeQuery();
-            
             DefaultTableModel model = new DefaultTableModel();
+            
             model.addColumn("Código");
             model.addColumn("Nome");
             model.addColumn("CPF");
-            model.addColumn("UF");
-            model.addColumn("Cidade");
-            model.addColumn("Endereço");
+            if (!pag) model.addColumn("UF");
+            if (!pag) model.addColumn("Cidade");
+            if (!pag) model.addColumn("Endereço");
             model.addColumn("Credito");
             model.addColumn("Saldo");
             model.setNumRows(0);
-
-            while (rs.next()) {
-                model.addRow(new Object[]{
-                    rs.getInt("idCliente") + "",
-                    rs.getString("ClienteNome") + "",
-                    rs.getString("ClienteCPF") + "",
-                    rs.getString("ClienteUF") + "",
-                    rs.getString("ClienteCidade") + "",
-                    rs.getString("ClienteEndereço") + "",
-                    rs.getDouble("ClienteCredito") + "",
-                    rs.getDouble("ClienteConta") + ""
-                });
+            
+            if (!pag) {
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getInt("idCliente") + "",
+                        rs.getString("ClienteNome") + "",
+                        rs.getString("ClienteCPF") + "",
+                        rs.getString("ClienteUF") + "",
+                        rs.getString("ClienteCidade") + "",
+                        rs.getString("ClienteEndereço") + "",
+                        rs.getDouble("ClienteCredito") + "",
+                        rs.getDouble("ClienteConta") + ""
+                    });
+                }
+            } else {
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getInt("idCliente") + "",
+                        rs.getString("ClienteNome") + "",
+                        rs.getString("ClienteCPF") + "",
+                        rs.getDouble("ClienteCredito") + "",
+                        rs.getDouble("ClienteConta") + ""
+                    });
+                }
             }
             
             stmt.close();
@@ -168,6 +217,36 @@ public class ClientesDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    
+    //Metodo que altera o saldo de clientes
+    public void AlterarSaldo(Clientes obj) {
+        try {
+            //Pega o saldo atual
+            String sql = "select ClienteConta from Clientes where idCliente =?";
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setDouble(1, obj.getCod_cliente());
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            rs.first();
+            double saldo = rs.getDouble("ClienteConta") + 0.0;
+            
+            //Muda o saldo
+            sql = "update Clientes set ClienteConta =? where idCliente =? ";
+            stmt = conexao.prepareStatement(sql);
+
+            stmt.setDouble(1, obj.getConta()+saldo);
+            
+            //Pegando o codigo do cliente para alterar
+            stmt.setDouble(2, obj.getCod_cliente());
+
+            stmt.execute();
+            stmt.close();
+
+        } catch (SQLException erro) {
+            throw new RuntimeException(erro);
         }
     }
 }

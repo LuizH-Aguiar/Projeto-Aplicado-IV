@@ -9,7 +9,7 @@ import model.Produtos;
 
 /**
  *
- * @author Fabiana Nunes
+ * @author Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
  */
 public class FrmEditaProdutos extends javax.swing.JFrame {
 
@@ -58,9 +58,10 @@ public class FrmEditaProdutos extends javax.swing.JFrame {
         menutitulo = new javax.swing.JMenu();
         menuexcluir = new javax.swing.JMenu();
         menusalvar = new javax.swing.JMenu();
-        menuvoltar = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtnome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -139,9 +140,10 @@ public class FrmEditaProdutos extends javax.swing.JFrame {
         jLabel10.setText("Quantidade:");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, -1, 30));
 
-        menutitulo.setText("Alteração e exclusão de produtos                           ");
+        menutitulo.setText("Edição de dados - produtos         ");
         jMenuBar1.add(menutitulo);
 
+        menuexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643729 - bin delete garbage rubbish trash waste.png"))); // NOI18N
         menuexcluir.setText("Excluir");
         menuexcluir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -150,6 +152,7 @@ public class FrmEditaProdutos extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuexcluir);
 
+        menusalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643774 - disk floppy save saveas saved saving.png"))); // NOI18N
         menusalvar.setText("Salvar");
         menusalvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -158,17 +161,19 @@ public class FrmEditaProdutos extends javax.swing.JFrame {
         });
         jMenuBar1.add(menusalvar);
 
-        menuvoltar.setText("Voltar");
-        menuvoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643764 - back backward left reply turn.png"))); // NOI18N
+        jMenu4.setText("Voltar");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuvoltarMouseClicked(evt);
+                jMenu4MouseClicked(evt);
             }
         });
-        jMenuBar1.add(menuvoltar);
+        jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuexcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuexcluirMouseClicked
@@ -181,7 +186,6 @@ public class FrmEditaProdutos extends javax.swing.JFrame {
             } else {
                 ProdutosDAO dao = new ProdutosDAO();
                 dao.Excluir(obj);
-                JOptionPane.showMessageDialog(null, "Registro excluido com sucesso!");
 
                 this.dispose();
             }
@@ -193,19 +197,52 @@ public class FrmEditaProdutos extends javax.swing.JFrame {
 
     private void menusalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menusalvarMouseClicked
         try {
+            boolean autoriza;
+            double custo, venda;
+            
+            try {
+                custo = Double.parseDouble(txtcusto.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Valor de custo deve ser um valor numérico");
+                txtcusto.grabFocus();
+                return;
+            }
+
+            try {
+                venda = Double.parseDouble(txtcusto.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Valor de venda deve ser um valor numérico");
+                txtvenda.grabFocus();
+                return;
+            }
+
+            autoriza = txtnome.getText().length() >= 3 && txtcusto.getText().length() >= 3 && txtvenda.getText().length() >= 3 && txtcodbarra.getText().length() >= 3;
+
+            if (!autoriza) {
+                JOptionPane.showMessageDialog(null, "Todos os campos devem conter no mínimo 3 caracteres");
+                return;
+            } else if (custo <= 0) {
+                JOptionPane.showMessageDialog(null, "Valor de custo deve ser maior que zero");
+                txtcusto.grabFocus();
+                return;
+            } else if (venda <= 0) {
+                JOptionPane.showMessageDialog(null, "Valor de venda deve ser maior que zero");
+                txtvenda.grabFocus();
+                return;
+            }
+            
             Produtos obj = new Produtos();
             
             obj.setCod_produto(Integer.parseInt(txtcodigo.getText()));
             obj.setNome(txtnome.getText());
-            obj.setValorCompra(Double.parseDouble(txtcusto.getText()));
-            obj.setValorVenda(Double.parseDouble(txtvenda.getText()));
+            obj.setValorCompra(custo);
+            obj.setValorVenda(venda);
             obj.setCodBarra(txtcodbarra.getText());
             obj.setDescricao(txtdescricao.getText());
             obj.setQuantidade(Integer.parseInt(txtquantidade.getText()));
 
             ProdutosDAO dao = new ProdutosDAO();
             dao.Alterar(obj);
-            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
 
             this.dispose();
 
@@ -213,10 +250,6 @@ public class FrmEditaProdutos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Aconteceu o erro:" +e);
         }
     }//GEN-LAST:event_menusalvarMouseClicked
-
-    private void menuvoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuvoltarMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_menuvoltarMouseClicked
 
     private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
         // TODO add your handling code here:
@@ -237,6 +270,10 @@ public class FrmEditaProdutos extends javax.swing.JFrame {
     private void txtquantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtquantidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtquantidadeActionPerformed
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jMenu4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -281,11 +318,11 @@ public class FrmEditaProdutos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuexcluir;
     private javax.swing.JMenu menusalvar;
     private javax.swing.JMenu menutitulo;
-    private javax.swing.JMenu menuvoltar;
     private javax.swing.JTextField txtcodbarra;
     public javax.swing.JTextField txtcodigo;
     private javax.swing.JTextField txtcusto;

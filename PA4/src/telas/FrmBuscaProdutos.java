@@ -9,7 +9,7 @@ import model.Produtos;
 
 /**
  *
- * @author Fabiana Nunes
+ * @author Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
  */
 public class FrmBuscaProdutos extends javax.swing.JFrame {
 
@@ -18,6 +18,16 @@ public class FrmBuscaProdutos extends javax.swing.JFrame {
      */
     public FrmBuscaProdutos() {
         initComponents();
+    }
+    
+    private boolean permissaoEditar;
+
+    public boolean getPermissaoEditar() {
+        return permissaoEditar;
+    }
+
+    public void setPermissaoEditar(boolean permissaoEditar) {
+        this.permissaoEditar = permissaoEditar;
     }
 
     /**
@@ -35,12 +45,20 @@ public class FrmBuscaProdutos extends javax.swing.JFrame {
         txtbusca = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(725, 425));
         setResizable(false);
         setSize(new java.awt.Dimension(725, 425));
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -49,13 +67,14 @@ public class FrmBuscaProdutos extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnbusca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnbusca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643762 - find glass magnifying search zoom.png"))); // NOI18N
         btnbusca.setText("Buscar");
         btnbusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnbuscaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnbusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, -1, -1));
+        getContentPane().add(btnbusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, -1, 30));
 
         tabelaprodutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -83,18 +102,22 @@ public class FrmBuscaProdutos extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 600, 220));
 
         txtbusca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtbusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 243, -1));
+        getContentPane().add(txtbusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 243, 30));
 
-        jMenu1.setText("Consulta de produtos                                                                                                                                                                                 ");
+        jMenu1.setText("Consulta de produtos");
         jMenuBar1.add(jMenu1);
 
-        jMenu4.setText("Menu");
-        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu2.setText("                                                                                                                                                                   ");
+        jMenuBar1.add(jMenu2);
+
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643769 - building home house main menu start.png"))); // NOI18N
+        jMenu5.setText("Menu");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu4MouseClicked(evt);
+                jMenu5MouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -107,9 +130,10 @@ public class FrmBuscaProdutos extends javax.swing.JFrame {
 
             ProdutosDAO dao = new ProdutosDAO();
 
-            DefaultTableModel model = dao.Buscar(txtbusca.getText());
+            DefaultTableModel model = dao.Buscar(txtbusca.getText(), 0);
 
             tabelaprodutos.setModel(model);
+            tabelaprodutos.setEnabled(getPermissaoEditar());
             txtbusca.setText(null);
 
         } catch (Exception e) {
@@ -117,7 +141,7 @@ public class FrmBuscaProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnbuscaActionPerformed
 
     private void tabelaprodutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaprodutosMouseClicked
-        if(tabelaprodutos.getSelectedRow() != -1){
+        if(tabelaprodutos.getSelectedRow() != -1 && getPermissaoEditar()){
             FrmEditaProdutos EditaProdutos = new FrmEditaProdutos();
             Produtos produto = new Produtos();
             
@@ -135,23 +159,38 @@ public class FrmBuscaProdutos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tabelaprodutosMouseClicked
 
-    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
-        this.dispose();
-    }//GEN-LAST:event_jMenu4MouseClicked
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
 
             ProdutosDAO dao = new ProdutosDAO();
 
-            DefaultTableModel model = dao.Buscar("");
+            DefaultTableModel model = dao.Buscar("",0);
+
+            tabelaprodutos.setModel(model);
+            tabelaprodutos.setEnabled(getPermissaoEditar());
+            txtbusca.setText(null);
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        try {
+
+            ProdutosDAO dao = new ProdutosDAO();
+
+            DefaultTableModel model = dao.Buscar("",0);
 
             tabelaprodutos.setModel(model);
             txtbusca.setText(null);
 
         } catch (Exception e) {
         }
-    }//GEN-LAST:event_formWindowOpened
+    }//GEN-LAST:event_formWindowGainedFocus
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jMenu5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -191,7 +230,8 @@ public class FrmBuscaProdutos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnbusca;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaprodutos;

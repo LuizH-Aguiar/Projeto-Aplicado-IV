@@ -6,23 +6,34 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menutitulo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cadastro de usu&#xe1;rios                                                         "/>
+            <Property name="text" type="java.lang.String" value="Cadastro de usu&#xe1;rios"/>
+          </Properties>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="                                  "/>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menucadastrar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/3643774 - disk floppy save saveas saved saving.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Cadastrar"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menucadastrarMouseClicked"/>
           </Events>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="menuprincipal">
+        <Menu class="javax.swing.JMenu" name="jMenu5">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/3643769 - building home house main menu start.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Menu"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuprincipalMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu5MouseClicked"/>
           </Events>
         </Menu>
       </SubComponents>
@@ -43,6 +54,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowActivated" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowActivated"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -116,10 +130,8 @@
     <Component class="javax.swing.JComboBox" name="cbtipo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="--------"/>
-            <StringItem index="1" value="Administrador"/>
-            <StringItem index="2" value="Vendedor"/>
+          <StringArray count="1">
+            <StringItem index="0" value="Selecione o tipo"/>
           </StringArray>
         </Property>
       </Properties>

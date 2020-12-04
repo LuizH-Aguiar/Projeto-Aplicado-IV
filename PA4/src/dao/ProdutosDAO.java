@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import jdbc.ConnectionFactory;
 import model.Produtos;
@@ -62,6 +63,8 @@ public class ProdutosDAO {
 
             stmt.execute();
             stmt.close();
+            
+            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
 
         } catch (SQLException erro) {
             throw new RuntimeException(erro);
@@ -71,8 +74,21 @@ public class ProdutosDAO {
     //Metodo que exclui produtos
     public void Excluir(Produtos obj) {
         try {
-            String sql = "delete from Produtos where idProduto =? ";
+            String sql = "select ItemIDProdutoCompra from ItemsCompras where ItemIDProdutoCompra = ?";
             PreparedStatement stmt = conexao.prepareStatement(sql);
+            
+            stmt.setInt(1, obj.getCod_produto());
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Item não pode ser excluído, pois é utilizado em registros");
+                return;
+            } else {
+                JOptionPane.showMessageDialog(null, "Registro excluido com sucesso!");
+            }
+            
+            sql = "delete from Produtos where idProduto =? ";
+            stmt = conexao.prepareStatement(sql);
 
             //Pegando o codigo do produto para excluir
             stmt.setInt(1, obj.getCod_produto());
@@ -115,13 +131,22 @@ public class ProdutosDAO {
         }
     }
 
-    //Metodo que busca usuarios
-    public DefaultTableModel Buscar(String busca) {
+    //Metodo que busca produtos
+    public DefaultTableModel Buscar(String busca, int mode) {
         try {
-            String sql = "select * from Produtos where ProdutoNome like ?";
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+            String sql = "";
+            PreparedStatement stmt = null;
             
-            stmt.setString(1, ("%"+busca+"%"));
+            if (mode == 0) {        //Busca por nome
+                sql = "select * from Produtos where ProdutoNome like ?";
+                stmt = conexao.prepareStatement(sql);
+                stmt.setString(1, ("%"+busca+"%"));
+            } else if (mode == 1) { //Busca por codigo de barras
+                sql = "select * from Produtos where ProdutoCodBarra like ?";
+                stmt = conexao.prepareStatement(sql);
+                stmt.setString(1, (""+busca+""));
+            }
+            
             ResultSet rs = stmt.executeQuery();
             
             DefaultTableModel model = new DefaultTableModel();
@@ -165,13 +190,13 @@ public class ProdutosDAO {
             ResultSet rs = stmt.executeQuery();
             
             rs.first();
-            int Estoque = rs.getInt("ProdutoQuantidade") + 0;
+            int estoque = rs.getInt("ProdutoQuantidade") + 0;
             
             //Muda o estoque
             sql = "update Produtos set ProdutoQuantidade =? where idProduto =? ";
             stmt = conexao.prepareStatement(sql);
 
-            stmt.setInt(1, obj.getQuantidade());
+            stmt.setInt(1, obj.getQuantidade()+estoque);
             
             //Pegando o codigo do produto para alterar
             stmt.setDouble(2, obj.getCod_produto());

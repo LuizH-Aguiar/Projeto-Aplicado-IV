@@ -10,14 +10,46 @@ create database sistemaestoque;
 use sistemaestoque;
 
 -- -----------------------------------------------------
+-- Tabela Permisões
+-- -----------------------------------------------------
+create table Permissoes (
+idPermissao int not null auto_increment,
+PermissaoCadastrar int not null,
+PermissaoBuscar int not null,
+PermissaoAlterar int not null,
+PermissaoCompra int not null,
+PermissaoVenda int not null,
+PermissaoPagamentos int not null,
+PermissaoClientes int not null,
+PermissaoFornecedores int not null,
+PermissaoProdutos int not null,
+PermissaoUsuarios int not null,
+PermissaoConfiguracoes int not null,
+PermissaoRelatorios int not null,
+primary key (idPermissao)
+);
+
+-- -----------------------------------------------------
+-- Tabela TiposUsuarios
+-- -----------------------------------------------------
+create table TiposUsuarios (
+idTipoUsuario int not null auto_increment,
+TipoUsuarioNome varchar(45) not null,
+TipoUsuarioIDPermissoes int not null,
+primary key (idTipoUsuario),
+constraint FK_TipoUsuario_Permissoes foreign key (TipoUsuarioIDPermissoes) references Permissoes (idPermissao)
+);
+
+-- -----------------------------------------------------
 -- Tabela Usuarios
 -- -----------------------------------------------------
 create table Usuarios(
 idUsuario int not null auto_increment,
 UsuarioNome varchar(45) not null,
 UsuarioSenha varchar(45) not null,
-UsuarioTipo varchar(45) not null,
-primary key (idUsuario)
+UsuarioTipo int not null,
+primary key (idUsuario),
+constraint FK_Usurio_TipoUsuario foreign key (UsuarioTipo) references TiposUsuarios (idTipoUsuario)
 );
 
 -- -----------------------------------------------------
@@ -102,7 +134,6 @@ constraint FK_ItemsVendas_Produto foreign key (ItemIDProdutoVenda) references Pr
 constraint FK_ItemsVendas_Venda foreign key (ItemIDVenda) references Vendas (idVenda)
 );
 
-
 -- -----------------------------------------------------
 -- Tabela ItemsCompras
 -- -----------------------------------------------------
@@ -117,4 +148,7 @@ constraint FK_ItemsCompras_Produto foreign key (ItemIDProdutoCompra) references 
 constraint FK_ItemsCompras_Compra foreign key (ItemIDCompra) references Compras (idCompra)
 );
 
-insert into Usuarios values (1,'A','A','Administrador');
+insert into Permissoes values (1,1,1,1,1,1,1,1,1,1,1,1,1);
+insert into TiposUsuarios values (1,'Administrador',1);
+insert into Usuarios values (1,'A','A',1);
+insert into Clientes values (1,'Consumidor final','XXXXXXXXXXX','XX','XXXX','XXXX',0.0,0.0);

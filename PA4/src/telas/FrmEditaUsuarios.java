@@ -3,13 +3,15 @@ Produzido por: Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
  */
 package telas;
 
+import dao.TiposUsuariosDAO;
 import dao.UsuariosDAO;
+import java.awt.List;
 import javax.swing.JOptionPane;
 import model.Usuarios;
 
 /**
  *
- * @author Fabiana Nunes
+ * @author Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
  */
 public class FrmEditaUsuarios extends javax.swing.JFrame {
 
@@ -25,7 +27,28 @@ public class FrmEditaUsuarios extends javax.swing.JFrame {
         txtcodigo.setText(String.valueOf(usuario.getCod_usuario()));
         txtnome.setText(usuario.getNome());
         txtsenha.setText(usuario.getSenha());
-        cbtipo.setSelectedItem(usuario.getTipo());
+        
+        try {
+            TiposUsuariosDAO dao = new TiposUsuariosDAO();
+            
+            List tipos = dao.ListarTipos();
+            
+            for(int i=1;i<cbtipo.getItemCount();) {
+                cbtipo.removeItem(i);
+            }
+            
+            for(int i=0;i<tipos.getItemCount();i++){
+                cbtipo.addItem(tipos.getItem(i));
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        for(int i=1;i<cbtipo.getItemCount();i++) {
+            if (usuario.getTipo().equals(cbtipo.getItemAt(i))) {
+                cbtipo.setSelectedIndex(i);
+            }
+        }
     }
 
     /**
@@ -49,9 +72,10 @@ public class FrmEditaUsuarios extends javax.swing.JFrame {
         menutitulo = new javax.swing.JMenu();
         menuexcluir = new javax.swing.JMenu();
         menusalvar = new javax.swing.JMenu();
-        menuvoltar = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -71,9 +95,14 @@ public class FrmEditaUsuarios extends javax.swing.JFrame {
         getContentPane().add(txtnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 130, 30));
 
         txtsenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtsenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtsenhaActionPerformed(evt);
+            }
+        });
         getContentPane().add(txtsenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 130, 30));
 
-        cbtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--------", "Administrador", "Vendedor" }));
+        cbtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--------" }));
         cbtipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbtipoActionPerformed(evt);
@@ -98,9 +127,10 @@ public class FrmEditaUsuarios extends javax.swing.JFrame {
         });
         getContentPane().add(txtcodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 40, 30));
 
-        menutitulo.setText("Alteração e exclusão de usuários                            ");
+        menutitulo.setText("Edição de dados - usuários          ");
         jMenuBar1.add(menutitulo);
 
+        menuexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643729 - bin delete garbage rubbish trash waste.png"))); // NOI18N
         menuexcluir.setText("Excluir");
         menuexcluir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -109,6 +139,7 @@ public class FrmEditaUsuarios extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuexcluir);
 
+        menusalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643774 - disk floppy save saveas saved saving.png"))); // NOI18N
         menusalvar.setText("Salvar");
         menusalvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -117,17 +148,19 @@ public class FrmEditaUsuarios extends javax.swing.JFrame {
         });
         jMenuBar1.add(menusalvar);
 
-        menuvoltar.setText("Voltar");
-        menuvoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643764 - back backward left reply turn.png"))); // NOI18N
+        jMenu4.setText("Voltar");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuvoltarMouseClicked(evt);
+                jMenu4MouseClicked(evt);
             }
         });
-        jMenuBar1.add(menuvoltar);
+        jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuexcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuexcluirMouseClicked
@@ -140,7 +173,6 @@ public class FrmEditaUsuarios extends javax.swing.JFrame {
             } else {
                 UsuariosDAO dao = new UsuariosDAO();
                 dao.Excluir(obj);
-                JOptionPane.showMessageDialog(null, "Registro excluido com sucesso!");
 
                 this.dispose();
             }
@@ -167,7 +199,6 @@ public class FrmEditaUsuarios extends javax.swing.JFrame {
                 
                 UsuariosDAO dao = new UsuariosDAO();
                 dao.Alterar(obj);
-                JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
 
                 this.dispose();
             }
@@ -176,10 +207,6 @@ public class FrmEditaUsuarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Aconteceu o erro:" +e);
         }
     }//GEN-LAST:event_menusalvarMouseClicked
-
-    private void menuvoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuvoltarMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_menuvoltarMouseClicked
 
     private void txtnomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnomeActionPerformed
         // TODO add your handling code here:
@@ -192,6 +219,14 @@ public class FrmEditaUsuarios extends javax.swing.JFrame {
     private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcodigoActionPerformed
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jMenu4MouseClicked
+
+    private void txtsenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtsenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,11 +269,11 @@ public class FrmEditaUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuexcluir;
     private javax.swing.JMenu menusalvar;
     private javax.swing.JMenu menutitulo;
-    private javax.swing.JMenu menuvoltar;
     public javax.swing.JTextField txtcodigo;
     private javax.swing.JTextField txtnome;
     private javax.swing.JTextField txtsenha;

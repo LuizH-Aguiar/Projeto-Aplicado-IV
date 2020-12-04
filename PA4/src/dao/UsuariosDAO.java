@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import jdbc.ConnectionFactory;
 import model.Usuarios;
-import telas.FrmMenu;
 
 /**
  *
@@ -27,35 +26,37 @@ public class UsuariosDAO {
     }
     
     //Método que faz o login
-    public boolean EfetuaLogin(Usuarios obj) throws SQLException {
+    public Usuarios EfetuaLogin(Usuarios obj) throws SQLException {
         
         //Passo 1 - Comando sql
-        String sql = "select * from Usuarios where UsuarioNome = ? and UsuarioSenha = ? and UsuarioTipo = ?";
+        String sql = "select U.idUsuario, U.UsuarioNome, U.UsuarioSenha, U.UsuarioTipo, T.TipoUsuarioNome from Usuarios U inner join TiposUsuarios T on U.UsuarioTipo = T.idTipoUsuario where UsuarioNome = ? and UsuarioSenha = ? ";
         
         //Passo 2 - Organiza o sql
         PreparedStatement stmt = conexao.prepareStatement(sql);
         stmt.setString(1, obj.getNome());
         stmt.setString(2, obj.getSenha());
-        stmt.setString(3, obj.getTipo());
         
         //Passo 3 - Executa o comando
         ResultSet rs = stmt.executeQuery();
+        Usuarios usuario = new Usuarios();
         
         //Passo 4 - Verificar o usuario
         if (rs.first()) {
-            FrmMenu menu = new FrmMenu();
-            
             //Acesso ao sistema
             JOptionPane.showMessageDialog(null, "Bem vindo ao sistema!");
-            menu.setVisible(true);
-            stmt.close();
-            return true;
+            
+            usuario.setCod_usuario(rs.getInt("idUsuario"));
+            usuario.setNome(rs.getString("UsuarioNome"));
+            usuario.setSenha(rs.getString("UsuarioSenha"));
+            usuario.setCod_Tipo(rs.getInt("UsuarioTipo"));
+            usuario.setTipo(rs.getString("TipoUsuarioNome"));
         } else {
             JOptionPane.showMessageDialog(null, "Usuario não encontrado!");
-            stmt.close();
-            return false;
+            usuario.setCod_usuario(-1);
         }
-          
+        
+        stmt.close();
+        return usuario;
     }
     
     //Metodo que cadastra usuarios
@@ -66,7 +67,7 @@ public class UsuariosDAO {
 
             stmt.setString(1, obj.getNome());
             stmt.setString(2, obj.getSenha());
-            stmt.setString(3, obj.getTipo());
+            stmt.setInt(3, obj.getCod_Tipo());
           
             stmt.execute();
             stmt.close();
@@ -79,18 +80,19 @@ public class UsuariosDAO {
     //Metodo que altera usuarios
     public void Alterar(Usuarios obj) {
         try {
-            String sql = "update Usuarios set UsuarioNome=?, UsuarioSenha=?, UsuarioTipo=? where idUsuario=? ";
+            String sql = "update Usuarios set UsuarioNome=?, UsuarioSenha=? where idUsuario=? ";
             PreparedStatement stmt = conexao.prepareStatement(sql);
 
             stmt.setString(1, obj.getNome());
             stmt.setString(2, obj.getSenha());
-            stmt.setString(3, obj.getTipo());
 
             //Pegando o codigo do usuario para alterar
-            stmt.setInt(4, obj.getCod_usuario());
+            stmt.setInt(3, obj.getCod_usuario());
 
             stmt.execute();
             stmt.close();
+            
+            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
 
         } catch (SQLException erro) {
             throw new RuntimeException(erro);
@@ -100,8 +102,29 @@ public class UsuariosDAO {
     //Metodo que exclui usuarios
     public void Excluir(Usuarios obj) {
         try {
-            String sql = "delete from Usuarios where idUsuario=? ";
+            String sql = "select CompraIDUsuario from Compras where CompraIDUsuario = ?";
             PreparedStatement stmt = conexao.prepareStatement(sql);
+            
+            stmt.setInt(1, obj.getCod_usuario());
+            ResultSet rs1 = stmt.executeQuery();
+            
+            
+            sql = "select VendaIDUsuario from Vendas where VendaIDUsuario = ?";
+            stmt = conexao.prepareStatement(sql);
+            
+            stmt.setInt(1, obj.getCod_usuario());
+            ResultSet rs2 = stmt.executeQuery();
+            
+            
+            if (rs1.next() || rs2.next()) {
+                JOptionPane.showMessageDialog(null, "Item não pode ser excluído, pois é utilizado em registros");
+                return;
+            } else {
+                JOptionPane.showMessageDialog(null, "Registro excluido com sucesso!");
+            }
+            
+            sql = "delete from Usuarios where idUsuario=? ";
+            stmt = conexao.prepareStatement(sql);
 
             //Pegando o codigo do usuario para excluir
             stmt.setInt(1, obj.getCod_usuario());
@@ -117,7 +140,7 @@ public class UsuariosDAO {
     //Metodo que lista todos os usuarios
     public DefaultTableModel Listar() {
         try {
-            String sql = "select * from Usuarios";
+            String sql = "select U.idUsuario, U.UsuarioNome, U.UsuarioSenha, T.TipoUsuarioNome from Usuarios U inner join TiposUsuarios T on U.UsuarioTipo = T.idTipoUsuario";
             PreparedStatement stmt = conexao.prepareStatement(sql);
             
             ResultSet rs = stmt.executeQuery();
@@ -134,7 +157,7 @@ public class UsuariosDAO {
                     rs.getInt("idUsuario") + "",
                     rs.getString("UsuarioNome") + "",
                     rs.getString("UsuarioSenha") + "",
-                    rs.getString("UsuarioTipo") + ""
+                    rs.getString("TipoUsuarioNome") + ""
                 });
             }
             
@@ -149,7 +172,7 @@ public class UsuariosDAO {
     //Metodo que busca usuarios
     public DefaultTableModel Buscar(String busca) {
         try {
-            String sql = "select * from Usuarios where UsuarioNome like ?";
+            String sql = "select U.idUsuario, U.UsuarioNome, U.UsuarioSenha, T.TipoUsuarioNome from Usuarios U inner join TiposUsuarios T on U.UsuarioTipo = T.idTipoUsuario where UsuarioNome like ?";
             PreparedStatement stmt = conexao.prepareStatement(sql);
             
             stmt.setString(1, ("%"+busca+"%"));
@@ -167,9 +190,8 @@ public class UsuariosDAO {
                     rs.getInt("idUsuario") + "",
                     rs.getString("UsuarioNome") + "",
                     rs.getString("UsuarioSenha") + "",
-                    rs.getString("UsuarioTipo") + ""
+                    rs.getString("TipoUsuarioNome") + ""
                 });
-                //System.out.println("Nome: "+ rs.getString("UsuarioNome"));
             }
             
             stmt.close();

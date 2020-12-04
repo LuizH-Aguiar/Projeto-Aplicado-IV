@@ -41,8 +41,9 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menutitulo = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
         menucadastrar = new javax.swing.JMenu();
-        menuprincipal = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(425, 325));
@@ -100,9 +101,13 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
         jLabel4.setText("Cod. de barras:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, 30));
 
-        menutitulo.setText("Cadastro de produtos                                                       ");
+        menutitulo.setText("Cadastro de produtos");
         jMenuBar1.add(menutitulo);
 
+        jMenu1.setText("                                 ");
+        jMenuBar1.add(jMenu1);
+
+        menucadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643774 - disk floppy save saveas saved saving.png"))); // NOI18N
         menucadastrar.setText("Cadastrar");
         menucadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -111,13 +116,14 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
         });
         jMenuBar1.add(menucadastrar);
 
-        menuprincipal.setText("Menu");
-        menuprincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643769 - building home house main menu start.png"))); // NOI18N
+        jMenu5.setText("Menu");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuprincipalMouseClicked(evt);
+                jMenu5MouseClicked(evt);
             }
         });
-        jMenuBar1.add(menuprincipal);
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -135,10 +141,44 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
 
     private void menucadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menucadastrarMouseClicked
         try {
+            boolean autoriza;
+            double custo, venda;
+            
+            try {
+                custo = Double.parseDouble(txtcusto.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Valor de custo deve ser um valor numérico");
+                txtcusto.grabFocus();
+                return;
+            }
+
+            try {
+                venda = Double.parseDouble(txtcusto.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Valor de venda deve ser um valor numérico");
+                txtvenda.grabFocus();
+                return;
+            }
+
+            autoriza = txtnome.getText().length() >= 3 && txtcusto.getText().length() >= 3 && txtvenda.getText().length() >= 3 && txtcodbarra.getText().length() >= 3;
+
+            if (!autoriza) {
+                JOptionPane.showMessageDialog(null, "Todos os campos devem conter no mínimo 3 caracteres");
+                return;
+            } else if (custo <= 0) {
+                JOptionPane.showMessageDialog(null, "Valor de custo deve ser maior que zero");
+                txtcusto.grabFocus();
+                return;
+            } else if (venda <= 0) {
+                JOptionPane.showMessageDialog(null, "Valor de venda deve ser maior que zero");
+                txtvenda.grabFocus();
+                return;
+            }
+
             Produtos obj = new Produtos();
 
             obj.setNome(txtnome.getText());
-            obj.setValorCompra(Double.parseDouble(txtcusto.getText()));
+            obj.setValorCompra(custo);
             obj.setValorVenda(Double.parseDouble(txtvenda.getText()));
             obj.setCodBarra(txtcodbarra.getText());
             obj.setDescricao(txtdescricao.getText());
@@ -146,7 +186,7 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
             ProdutosDAO dao = new ProdutosDAO();
             dao.Cadastrar(obj);
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
-            
+
             txtnome.setText(null);
             txtcusto.setText(null);
             txtvenda.setText(null);
@@ -154,17 +194,17 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
             txtdescricao.setText(null);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Aconteceu o erro:" +e);
+            JOptionPane.showMessageDialog(null, "Aconteceu o erro:" + e);
         }
     }//GEN-LAST:event_menucadastrarMouseClicked
-
-    private void menuprincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuprincipalMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_menuprincipalMouseClicked
 
     private void txtcodbarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodbarraActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcodbarraActionPerformed
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jMenu5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -207,9 +247,10 @@ public class FrmCadastroProdutos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menucadastrar;
-    private javax.swing.JMenu menuprincipal;
     private javax.swing.JMenu menutitulo;
     private javax.swing.JTextField txtcodbarra;
     private javax.swing.JTextField txtcusto;

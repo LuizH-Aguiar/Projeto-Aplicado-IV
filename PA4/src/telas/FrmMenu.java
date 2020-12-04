@@ -3,7 +3,11 @@ Produzido por: Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
  */
 package telas;
 
+import dao.TiposUsuariosDAO;
 import static java.lang.System.exit;
+import java.sql.SQLException;
+import model.Permissoes;
+import model.Usuarios;
 
 /**
  *
@@ -17,6 +21,65 @@ public class FrmMenu extends javax.swing.JFrame {
     public FrmMenu() {
         initComponents();
     }
+    
+    private boolean permissaoEditar;
+
+    public boolean getPermissaoEditar() {
+        return permissaoEditar;
+    }
+
+    public void setPermissaoEditar(boolean permissaoEditar) {
+        this.permissaoEditar = permissaoEditar;
+    }
+    
+    void DadosLogin(Usuarios obj) throws SQLException {
+        txtcodigo.setText(obj.getCod_usuario()+"");
+        txtnome.setText(obj.getNome());
+        
+        TiposUsuariosDAO daop = new TiposUsuariosDAO();
+        Permissoes perm = new Permissoes();
+        
+        perm.setPermissoes(daop.BuscarPermissoes(obj.getCod_Tipo()));
+        
+        /*
+        0 -> Cadastrar      1 -> Buscar         2 -> Alterar
+        3 -> Compra         4 -> Venda          5 -> Pagamentos
+        6 -> Clientes       7 -> Fornecedores   8 -> Produtos
+        9 -> Usuarios       10 -> Configurações 11 -> Relatorios
+        */
+        
+        //Cadastros
+        if (perm.getPermissaoAt(0)) {
+            menuItemCadastroClientes.setVisible(perm.getPermissaoAt(6));
+            menuItemCadastroFornecedores.setVisible(perm.getPermissaoAt(7));
+            menuItemCadastroProdutos.setVisible(perm.getPermissaoAt(8));
+            menuItemCadastroUsuarios.setVisible(perm.getPermissaoAt(9));
+        } else {
+            menuCadastro.setVisible(false);
+        }
+        
+        //Buscas
+        if (perm.getPermissaoAt(1)) {
+            menuItemBuscaClientes.setVisible(perm.getPermissaoAt(6));
+            menuItemBuscaFornecedores.setVisible(perm.getPermissaoAt(7));
+            menuItemBuscaProdutos.setVisible(perm.getPermissaoAt(8));
+            menuItemBuscaUsuarios.setVisible(perm.getPermissaoAt(9));
+        } else {
+            menuBusca.setVisible(false);
+        }
+        
+        //Alterações
+        setPermissaoEditar(perm.getPermissaoAt(2));
+        
+        //Compra, venda e pagamentos
+        menuCompra.setVisible(perm.getPermissaoAt(3));
+        menuVenda.setVisible(perm.getPermissaoAt(4));
+        menuPagamentos.setVisible(perm.getPermissaoAt(5));
+        
+        //Configurações e relatorios
+        menuConfiguracoes.setVisible(perm.getPermissaoAt(10));
+        menuRelatorios.setVisible(perm.getPermissaoAt(11));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,19 +90,27 @@ public class FrmMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        txtnome = new javax.swing.JTextField();
+        txtcodigo = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        menucadastro = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        menubusca = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        menuestoque = new javax.swing.JMenu();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        menuCadastro = new javax.swing.JMenu();
+        menuItemCadastroClientes = new javax.swing.JMenuItem();
+        menuItemCadastroFornecedores = new javax.swing.JMenuItem();
+        menuItemCadastroProdutos = new javax.swing.JMenuItem();
+        menuItemCadastroUsuarios = new javax.swing.JMenuItem();
+        menuBusca = new javax.swing.JMenu();
+        menuItemBuscaClientes = new javax.swing.JMenuItem();
+        menuItemBuscaFornecedores = new javax.swing.JMenuItem();
+        menuItemBuscaProdutos = new javax.swing.JMenuItem();
+        menuItemBuscaUsuarios = new javax.swing.JMenuItem();
+        menuCompra = new javax.swing.JMenu();
+        menuVenda = new javax.swing.JMenu();
+        menuPagamentos = new javax.swing.JMenu();
+        menuRelatorios = new javax.swing.JMenu();
+        menuConfiguracoes = new javax.swing.JMenu();
+        menuItemPermissoes = new javax.swing.JMenuItem();
         menusair = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -55,93 +126,182 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        menucadastro.setText("Cadastro");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643745 - human man people person profile.png"))); // NOI18N
+        jLabel1.setText("Usuário:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, 30));
 
-        jMenuItem1.setText("Clientes");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        txtnome.setEditable(false);
+        txtnome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtnome.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        getContentPane().add(txtnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 120, 30));
+
+        txtcodigo.setEditable(false);
+        txtcodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtcodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtcodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                txtcodigoActionPerformed(evt);
             }
         });
-        menucadastro.add(jMenuItem1);
+        getContentPane().add(txtcodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, 30, 30));
 
-        jMenuItem9.setText("Fornecedores");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagemLogo.png"))); // NOI18N
+        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
+
+        menuCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643746 - add friend member people plus.png"))); // NOI18N
+        menuCadastro.setText("Cadastro");
+        menuCadastro.setToolTipText("Relizar cadastros");
+
+        menuItemCadastroClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643750 - draw edit pencil stationary write.png"))); // NOI18N
+        menuItemCadastroClientes.setText("Clientes");
+        menuItemCadastroClientes.setToolTipText("Cadastrar novos clientes");
+        menuItemCadastroClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                menuItemCadastroClientesActionPerformed(evt);
             }
         });
-        menucadastro.add(jMenuItem9);
+        menuCadastro.add(menuItemCadastroClientes);
 
-        jMenuItem7.setText("Produtos");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCadastroFornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643750 - draw edit pencil stationary write.png"))); // NOI18N
+        menuItemCadastroFornecedores.setText("Fornecedores");
+        menuItemCadastroFornecedores.setToolTipText("Cadastrar novos fornecedores");
+        menuItemCadastroFornecedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                menuItemCadastroFornecedoresActionPerformed(evt);
             }
         });
-        menucadastro.add(jMenuItem7);
+        menuCadastro.add(menuItemCadastroFornecedores);
 
-        jMenuItem2.setText("Usuários");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCadastroProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643750 - draw edit pencil stationary write.png"))); // NOI18N
+        menuItemCadastroProdutos.setText("Produtos");
+        menuItemCadastroProdutos.setToolTipText("Cadastrar novos produtos");
+        menuItemCadastroProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuItemCadastroProdutosActionPerformed(evt);
             }
         });
-        menucadastro.add(jMenuItem2);
+        menuCadastro.add(menuItemCadastroProdutos);
 
-        jMenuBar1.add(menucadastro);
-
-        menubusca.setText("Busca");
-
-        jMenuItem3.setText("Cliente");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCadastroUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643750 - draw edit pencil stationary write.png"))); // NOI18N
+        menuItemCadastroUsuarios.setText("Usuários");
+        menuItemCadastroUsuarios.setToolTipText("Cadastrar novos usuários");
+        menuItemCadastroUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuItemCadastroUsuariosActionPerformed(evt);
             }
         });
-        menubusca.add(jMenuItem3);
+        menuCadastro.add(menuItemCadastroUsuarios);
 
-        jMenuItem10.setText("Fornecedores");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBar1.add(menuCadastro);
+
+        menuBusca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643762 - find glass magnifying search zoom.png"))); // NOI18N
+        menuBusca.setText("Busca");
+        menuBusca.setToolTipText("Buscar e editar registros");
+
+        menuItemBuscaClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643749 - edit pen pencil write writing.png"))); // NOI18N
+        menuItemBuscaClientes.setText("Clientes");
+        menuItemBuscaClientes.setToolTipText("Buscar e edtar clientes cadastrados");
+        menuItemBuscaClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                menuItemBuscaClientesActionPerformed(evt);
             }
         });
-        menubusca.add(jMenuItem10);
+        menuBusca.add(menuItemBuscaClientes);
 
-        jMenuItem8.setText("Produtos");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        menuItemBuscaFornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643749 - edit pen pencil write writing.png"))); // NOI18N
+        menuItemBuscaFornecedores.setText("Fornecedores");
+        menuItemBuscaFornecedores.setToolTipText("Buscar e edtar fornecedores cadastrados");
+        menuItemBuscaFornecedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                menuItemBuscaFornecedoresActionPerformed(evt);
             }
         });
-        menubusca.add(jMenuItem8);
+        menuBusca.add(menuItemBuscaFornecedores);
 
-        jMenuItem4.setText("Usuários");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menuItemBuscaProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643749 - edit pen pencil write writing.png"))); // NOI18N
+        menuItemBuscaProdutos.setText("Produtos");
+        menuItemBuscaProdutos.setToolTipText("Buscar e edtar produtos cadastrados");
+        menuItemBuscaProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                menuItemBuscaProdutosActionPerformed(evt);
             }
         });
-        menubusca.add(jMenuItem4);
+        menuBusca.add(menuItemBuscaProdutos);
 
-        jMenuBar1.add(menubusca);
-
-        menuestoque.setText("Estoque");
-
-        jMenuItem11.setText("Entrada de estoque");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        menuItemBuscaUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643749 - edit pen pencil write writing.png"))); // NOI18N
+        menuItemBuscaUsuarios.setText("Usuários");
+        menuItemBuscaUsuarios.setToolTipText("Buscar e edtar usuários cadastrados");
+        menuItemBuscaUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                menuItemBuscaUsuariosActionPerformed(evt);
             }
         });
-        menuestoque.add(jMenuItem11);
+        menuBusca.add(menuItemBuscaUsuarios);
 
-        jMenuBar1.add(menuestoque);
+        jMenuBar1.add(menuBusca);
 
+        menuCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643738 - bag paper shop shopping tote.png"))); // NOI18N
+        menuCompra.setText("Estoque");
+        menuCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuCompraMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuCompra);
+
+        menuVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643737 - cart drop shop shopping trolly.png"))); // NOI18N
+        menuVenda.setText("Tela de vendas");
+        menuVenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuVendaMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuVenda);
+
+        menuPagamentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643747 - friend group people peoples team.png"))); // NOI18N
+        menuPagamentos.setText("Pagamentos");
+        menuPagamentos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuPagamentosMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuPagamentos);
+
+        menuRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643740 - device paper print printer write.png"))); // NOI18N
+        menuRelatorios.setText("Relatórios");
+        jMenuBar1.add(menuRelatorios);
+
+        menuConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643771 - configuration configure gear set setting.png"))); // NOI18N
+        menuConfiguracoes.setText("Configurações");
+        menuConfiguracoes.setToolTipText("Editar atributos do sistema");
+
+        menuItemPermissoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643767 - key keys main password privilege.png"))); // NOI18N
+        menuItemPermissoes.setText("Permissões");
+        menuItemPermissoes.setToolTipText("Visualizar e editar permissões de usuários");
+        menuItemPermissoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemPermissoesActionPerformed(evt);
+            }
+        });
+        menuConfiguracoes.add(menuItemPermissoes);
+
+        jMenuBar1.add(menuConfiguracoes);
+
+        menusair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643763 - list mark menu option sign.png"))); // NOI18N
         menusair.setText("Sair");
+        menusair.setToolTipText("Finalizar sessão");
+        menusair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menusairMouseClicked(evt);
+            }
+        });
 
-        jMenuItem5.setText("Tela de login");
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643754 - available open padlock unlock unlocked.png"))); // NOI18N
+        jMenuItem5.setText("Trocar de usuário");
+        jMenuItem5.setToolTipText("Retorna para a tela de login");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -149,7 +309,9 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         menusair.add(jMenuItem5);
 
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643755 - hide lock locked padlock private.png"))); // NOI18N
         jMenuItem6.setText("Fechar sistema");
+        jMenuItem6.setToolTipText("Fecha todas as telas do sistema");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -165,13 +327,15 @@ public class FrmMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuItemCadastroClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroClientesActionPerformed
         new FrmCadastroClientes().setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuItemCadastroClientesActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        new FrmBuscaClientes().setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void menuItemBuscaClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemBuscaClientesActionPerformed
+        FrmBuscaClientes BuscaClientes = new FrmBuscaClientes();
+        BuscaClientes.setPermissaoEditar(getPermissaoEditar());
+        BuscaClientes.setVisible(true);
+    }//GEN-LAST:event_menuItemBuscaClientesActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         new FrmLogin().setVisible(true);
@@ -182,38 +346,70 @@ public class FrmMenu extends javax.swing.JFrame {
         exit(0);        
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void menuItemCadastroUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroUsuariosActionPerformed
         new FrmCadastroUsuarios().setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menuItemCadastroUsuariosActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        new FrmBuscaUsuarios().setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    private void menuItemBuscaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemBuscaUsuariosActionPerformed
+        FrmBuscaUsuarios BuscaUsuarios = new FrmBuscaUsuarios();
+        BuscaUsuarios.setPermissaoEditar(getPermissaoEditar());
+        BuscaUsuarios.setVisible(true);
+    }//GEN-LAST:event_menuItemBuscaUsuariosActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         new FrmLogin().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void menuItemCadastroProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroProdutosActionPerformed
         new FrmCadastroProdutos().setVisible(true);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_menuItemCadastroProdutosActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        new FrmBuscaProdutos().setVisible(true);
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    private void menuItemBuscaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemBuscaProdutosActionPerformed
+        FrmBuscaProdutos BuscaProdutos = new FrmBuscaProdutos();
+        BuscaProdutos.setPermissaoEditar(getPermissaoEditar());
+        BuscaProdutos.setVisible(true);
+    }//GEN-LAST:event_menuItemBuscaProdutosActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void menuItemCadastroFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroFornecedoresActionPerformed
         new FrmCadastroFornecedores().setVisible(true);
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_menuItemCadastroFornecedoresActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        new FrmBuscaFornecedores().setVisible(true);
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    private void menuItemBuscaFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemBuscaFornecedoresActionPerformed
+        FrmBuscaFornecedores BuscaFornecedores = new FrmBuscaFornecedores();
+        BuscaFornecedores.setPermissaoEditar(getPermissaoEditar());
+        BuscaFornecedores.setVisible(true);
+    }//GEN-LAST:event_menuItemBuscaFornecedoresActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        new FrmEstoqueEntrada().setVisible(true);
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcodigoActionPerformed
+
+    private void menusairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menusairMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menusairMouseClicked
+
+    private void menuVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuVendaMouseClicked
+        FrmEstoqueSaida EstoqueSaida = new FrmEstoqueSaida();
+        EstoqueSaida.Preencher(txtcodigo.getText(),txtnome.getText());
+        EstoqueSaida.setVisible(true);
+    }//GEN-LAST:event_menuVendaMouseClicked
+
+    private void menuItemPermissoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPermissoesActionPerformed
+        new FrmBuscaPermissoes().setVisible(true);
+    }//GEN-LAST:event_menuItemPermissoesActionPerformed
+
+    private void menuPagamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPagamentosMouseClicked
+        FrmBuscaClientes PagClientes = new FrmBuscaClientes();
+        PagClientes.setPermissaoPagamento(true);
+        PagClientes.setVisible(true);
+    }//GEN-LAST:event_menuPagamentosMouseClicked
+
+    private void menuCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCompraMouseClicked
+        FrmEstoqueEntrada EstoqueEntrada = new FrmEstoqueEntrada();
+        EstoqueEntrada.Preencher(txtcodigo.getText());
+        EstoqueEntrada.setVisible(true);
+    }//GEN-LAST:event_menuCompraMouseClicked
 
     /**
      * @param args the command line arguments
@@ -252,21 +448,29 @@ public class FrmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JMenu menubusca;
-    private javax.swing.JMenu menucadastro;
-    private javax.swing.JMenu menuestoque;
+    private javax.swing.JMenu menuBusca;
+    private javax.swing.JMenu menuCadastro;
+    private javax.swing.JMenu menuCompra;
+    private javax.swing.JMenu menuConfiguracoes;
+    private javax.swing.JMenuItem menuItemBuscaClientes;
+    private javax.swing.JMenuItem menuItemBuscaFornecedores;
+    private javax.swing.JMenuItem menuItemBuscaProdutos;
+    private javax.swing.JMenuItem menuItemBuscaUsuarios;
+    private javax.swing.JMenuItem menuItemCadastroClientes;
+    private javax.swing.JMenuItem menuItemCadastroFornecedores;
+    private javax.swing.JMenuItem menuItemCadastroProdutos;
+    private javax.swing.JMenuItem menuItemCadastroUsuarios;
+    private javax.swing.JMenuItem menuItemPermissoes;
+    private javax.swing.JMenu menuPagamentos;
+    private javax.swing.JMenu menuRelatorios;
+    private javax.swing.JMenu menuVenda;
     private javax.swing.JMenu menusair;
+    private javax.swing.JTextField txtcodigo;
+    private javax.swing.JTextField txtnome;
     // End of variables declaration//GEN-END:variables
 }

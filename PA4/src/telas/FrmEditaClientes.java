@@ -4,12 +4,13 @@ Produzido por: Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
 package telas;
 
 import dao.ClientesDAO;
+import java.text.ParseException;
 import javax.swing.JOptionPane;
 import model.Clientes;
 
 /**
  *
- * @author Fabiana Nunes
+ * @author Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
  */
 public class FrmEditaClientes extends javax.swing.JFrame {
 
@@ -20,15 +21,14 @@ public class FrmEditaClientes extends javax.swing.JFrame {
         initComponents();
     }
     
-    void preencher(Clientes cliente) {
-        
+    void preencher(Clientes cliente) throws ParseException {
         txtcodigo.setText(String.valueOf(cliente.getCod_cliente()));
         txtnome.setText(cliente.getNome());
-        ftxtcpf.setText(cliente.getCpf());
         txtcredito.setText(String.valueOf(cliente.getCredito()));
         txtcidade.setText(cliente.getCidade());
         txtendereco.setText(cliente.getEndereco());
         cbuf.setSelectedItem(cliente.getUf());
+        ftxtcpf.setText(cliente.getCpf());
     }
 
     /**
@@ -64,9 +64,10 @@ public class FrmEditaClientes extends javax.swing.JFrame {
         menutitulo = new javax.swing.JMenu();
         menuexcluir = new javax.swing.JMenu();
         menusalvar = new javax.swing.JMenu();
-        menuvoltar = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -134,9 +135,10 @@ public class FrmEditaClientes extends javax.swing.JFrame {
         });
         getContentPane().add(txtcodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 40, 30));
 
-        menutitulo.setText("Alteração e exclusão de clientes                              ");
+        menutitulo.setText("Edição de dados - clientes           ");
         jMenuBar1.add(menutitulo);
 
+        menuexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643729 - bin delete garbage rubbish trash waste.png"))); // NOI18N
         menuexcluir.setText("Excluir");
         menuexcluir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -145,6 +147,7 @@ public class FrmEditaClientes extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuexcluir);
 
+        menusalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643774 - disk floppy save saveas saved saving.png"))); // NOI18N
         menusalvar.setText("Salvar");
         menusalvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -153,17 +156,19 @@ public class FrmEditaClientes extends javax.swing.JFrame {
         });
         jMenuBar1.add(menusalvar);
 
-        menuvoltar.setText("Voltar");
-        menuvoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643764 - back backward left reply turn.png"))); // NOI18N
+        jMenu4.setText("Voltar");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuvoltarMouseClicked(evt);
+                jMenu4MouseClicked(evt);
             }
         });
-        jMenuBar1.add(menuvoltar);
+        jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtnomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnomeActionPerformed
@@ -176,19 +181,45 @@ public class FrmEditaClientes extends javax.swing.JFrame {
 
     private void menusalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menusalvarMouseClicked
         try {
+            boolean autoriza;
+            String cpf = ftxtcpf.getText();
+            double credito;
+            
+            cpf = cpf.replace(".","");
+            cpf = cpf.replace("-","");
+            cpf = cpf.replace(" ","");
+            
+            try {
+                credito = Double.parseDouble(txtcredito.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Valor de crédito deve ser um valor numérico");
+                txtcredito.grabFocus();
+                return;
+            }
+            
+            autoriza = txtnome.getText().length() >= 3 && txtcredito.getText().length() >= 3 && txtcidade.getText().length() >= 3 && txtendereco.getText().length() >= 3;
+            
+            if (!autoriza) {
+                JOptionPane.showMessageDialog(null, "Todos os campos devem conter no mínimo 3 caracteres");
+                return;
+            } else if (cpf.length() != 11) {
+                JOptionPane.showMessageDialog(null, "CPF incompleto");
+                ftxtcpf.grabFocus();
+                return;
+            } else if (credito < 0) {
+                JOptionPane.showMessageDialog(null, "Valor de crédito deve ser maior ou igual a zero");
+                txtcredito.grabFocus();
+                return;
+            }
+            
             Clientes obj = new Clientes();
             
             obj.setCod_cliente(Integer.parseInt(txtcodigo.getText()));
             obj.setNome(txtnome.getText());
             obj.setCidade(txtcidade.getText());
             obj.setEndereco(txtendereco.getText());
-            obj.setCredito(Double.parseDouble(txtcredito.getText()));
+            obj.setCredito(credito);
             obj.setConta(0);
-            
-            String cpf = ftxtcpf.getText();
-            cpf = cpf.replace(".","");
-            cpf = cpf.replace("-","");
-            
             obj.setCpf(cpf);
             
             int uf = cbuf.getSelectedIndex();
@@ -200,7 +231,6 @@ public class FrmEditaClientes extends javax.swing.JFrame {
                 
                 ClientesDAO dao = new ClientesDAO();
                 dao.Alterar(obj);
-                JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
                 
                 this.dispose();
             }
@@ -209,10 +239,6 @@ public class FrmEditaClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Aconteceu o erro:" +e);
         }
     }//GEN-LAST:event_menusalvarMouseClicked
-
-    private void menuvoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuvoltarMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_menuvoltarMouseClicked
 
     private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
         // TODO add your handling code here:
@@ -228,7 +254,6 @@ public class FrmEditaClientes extends javax.swing.JFrame {
             } else {
                 ClientesDAO dao = new ClientesDAO();
                 dao.Excluir(obj);
-                JOptionPane.showMessageDialog(null, "Registro excluido com sucesso!");
                 
                 this.dispose();
             }
@@ -237,6 +262,10 @@ public class FrmEditaClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Aconteceu o erro:" +e);
         }
     }//GEN-LAST:event_menuexcluirMouseClicked
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jMenu4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -283,11 +312,11 @@ public class FrmEditaClientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuexcluir;
     private javax.swing.JMenu menusalvar;
     private javax.swing.JMenu menutitulo;
-    private javax.swing.JMenu menuvoltar;
     private javax.swing.JTextField txtcidade;
     public javax.swing.JTextField txtcodigo;
     private javax.swing.JTextField txtcredito;

@@ -5,7 +5,7 @@ package jdbc;
 
 /**
  *
- * @author Fabiana Nunes
+ * @author Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
  */
 public class TestaConexao {
     

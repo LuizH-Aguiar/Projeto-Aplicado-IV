@@ -9,7 +9,7 @@ import model.Clientes;
 
 /**
  *
- * @author Fabiana Nunes
+ * @author Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
  */
 public class FrmBuscaClientes extends javax.swing.JFrame {
 
@@ -18,6 +18,25 @@ public class FrmBuscaClientes extends javax.swing.JFrame {
      */
     public FrmBuscaClientes() {
         initComponents();
+    }
+    
+    private boolean permissaoEditar;
+    private boolean permissaoPagamento;
+
+    public boolean getPermissaoEditar() {
+        return permissaoEditar;
+    }
+
+    public void setPermissaoEditar(boolean permissaoEditar) {
+        this.permissaoEditar = permissaoEditar;
+    }
+
+    public boolean getPermissaoPagamento() {
+        return permissaoPagamento;
+    }
+
+    public void setPermissaoPagamento(boolean permissaoPagamento) {
+        this.permissaoPagamento = permissaoPagamento;
     }
 
     /**
@@ -35,12 +54,20 @@ public class FrmBuscaClientes extends javax.swing.JFrame {
         txtbusca = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(725, 425));
         setResizable(false);
         setSize(new java.awt.Dimension(725, 425));
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -49,13 +76,14 @@ public class FrmBuscaClientes extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnbusca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnbusca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643762 - find glass magnifying search zoom.png"))); // NOI18N
         btnbusca.setText("Buscar");
         btnbusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnbuscaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnbusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, -1, -1));
+        getContentPane().add(btnbusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, -1, 30));
 
         tabelaclientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -83,18 +111,22 @@ public class FrmBuscaClientes extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 600, 220));
 
         txtbusca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtbusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 243, -1));
+        getContentPane().add(txtbusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 243, 30));
 
-        jMenu1.setText("Consulta de clientes                                                                                                                                                                                   ");
+        jMenu1.setText("Consulta de clientes");
         jMenuBar1.add(jMenu1);
 
-        jMenu4.setText("Menu");
-        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu2.setText("                                                                                                                                                                      ");
+        jMenuBar1.add(jMenu2);
+
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643769 - building home house main menu start.png"))); // NOI18N
+        jMenu5.setText("Menu");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu4MouseClicked(evt);
+                jMenu5MouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -106,9 +138,10 @@ public class FrmBuscaClientes extends javax.swing.JFrame {
         try {
             ClientesDAO dao = new ClientesDAO();
 
-            DefaultTableModel model = dao.Buscar(txtbusca.getText());
+            DefaultTableModel model = dao.Buscar(txtbusca.getText(), 0, getPermissaoPagamento());
 
             tabelaclientes.setModel(model);
+            tabelaclientes.setEnabled(getPermissaoEditar() || getPermissaoPagamento());
             txtbusca.setText(null);
 
         } catch (Exception e) {
@@ -116,43 +149,69 @@ public class FrmBuscaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnbuscaActionPerformed
 
     private void tabelaclientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaclientesMouseClicked
-        
-        if(tabelaclientes.getSelectedRow() != -1){
-            FrmEditaClientes EditaClientes = new FrmEditaClientes();
+        try {
             Clientes cliente = new Clientes();
             
-            cliente.setCod_cliente(Integer.parseInt(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 0).toString()));
-            cliente.setNome(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 1).toString());
-            cliente.setCpf((tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 2).toString()));
-            cliente.setUf(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 3).toString());
-            cliente.setCidade(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 4).toString());
-            cliente.setEndereco(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 5).toString());
-            cliente.setCredito(Double.parseDouble(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 6).toString()));
-            
-            EditaClientes.preencher(cliente);
-            
-            EditaClientes.setVisible(true);
+            if(tabelaclientes.getSelectedRow() != -1 && getPermissaoEditar()){
+                FrmEditaClientes EditaClientes = new FrmEditaClientes();
+                
+                cliente.setCod_cliente(Integer.parseInt(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 0).toString()));
+                cliente.setNome(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 1).toString());
+                cliente.setCpf((tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 2).toString()));
+                cliente.setUf(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 3).toString());
+                cliente.setCidade(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 4).toString());
+                cliente.setEndereco(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 5).toString());
+                cliente.setCredito(Double.parseDouble(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 6).toString()));
+                
+                EditaClientes.preencher(cliente);
+                EditaClientes.setVisible(true);
+            } else if (getPermissaoPagamento()){
+                FrmPagamentos Pagamento = new FrmPagamentos();
+                
+                cliente.setCod_cliente(Integer.parseInt(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 0).toString()));
+                cliente.setNome(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 1).toString());
+                cliente.setCpf((tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 2).toString()));
+                cliente.setCredito(Double.parseDouble(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 3).toString()));
+                cliente.setConta(Double.parseDouble(tabelaclientes.getValueAt(tabelaclientes.getSelectedRow(), 4).toString()));
+                
+                Pagamento.preencher(cliente);
+                Pagamento.setVisible(true);
+            }
+        } catch (Exception e) {
         }
-        
     }//GEN-LAST:event_tabelaclientesMouseClicked
-
-    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
-        this.dispose();
-    }//GEN-LAST:event_jMenu4MouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-
             ClientesDAO dao = new ClientesDAO();
 
-            DefaultTableModel model = dao.Listar();
-
+            DefaultTableModel model = dao.Listar(getPermissaoPagamento());
+            
             tabelaclientes.setModel(model);
+            tabelaclientes.setEnabled(getPermissaoEditar() || getPermissaoPagamento());
             txtbusca.setText(null);
 
         } catch (Exception e) {
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        try {
+            ClientesDAO dao = new ClientesDAO();
+
+            DefaultTableModel model = dao.Listar(getPermissaoPagamento());
+            
+            tabelaclientes.setModel(model);
+            tabelaclientes.setEnabled(getPermissaoEditar() || getPermissaoPagamento());
+            txtbusca.setText(null);
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments
@@ -193,7 +252,8 @@ public class FrmBuscaClientes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnbusca;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaclientes;

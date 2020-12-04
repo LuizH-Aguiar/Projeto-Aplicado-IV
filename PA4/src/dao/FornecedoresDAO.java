@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import jdbc.ConnectionFactory;
 import model.Fornecedores;
@@ -56,6 +57,8 @@ public class FornecedoresDAO {
 
             stmt.execute();
             stmt.close();
+            
+            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
 
         } catch (SQLException erro) {
             throw new RuntimeException(erro);
@@ -65,8 +68,21 @@ public class FornecedoresDAO {
     //Metodo que exclui fornecedores
     public void Excluir(Fornecedores obj) {
         try {
-            String sql = "delete from Fornecedores where idFornecedor=? ";
+            String sql = "select CompraIDFornecedor from Compras where CompraIDFornecedor = ?";
             PreparedStatement stmt = conexao.prepareStatement(sql);
+            
+            stmt.setInt(1, obj.getCod_fornecedor());
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Item não pode ser excluído, pois é utilizado em registros");
+                return;
+            } else {
+                JOptionPane.showMessageDialog(null, "Registro excluido com sucesso!");
+            }
+            
+            sql = "delete from Fornecedores where idFornecedor=? ";
+            stmt = conexao.prepareStatement(sql);
 
             //Pegando o codigo do fornecedor para excluir
             stmt.setInt(1, obj.getCod_fornecedor());

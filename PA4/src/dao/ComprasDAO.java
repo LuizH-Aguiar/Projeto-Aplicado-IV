@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import jdbc.ConnectionFactory;
 import model.Compras;
 import model.Itens;
@@ -34,7 +33,7 @@ public class ComprasDAO {
             stmt.setDouble(1, obj.getValor());
             stmt.setString(2, obj.getData());
             stmt.setInt(3, obj.getCod_fornecedor());
-            stmt.setInt(4, obj.getCod_Usuario());
+            stmt.setInt(4, obj.getCod_usuario());
             
             stmt.execute();
             stmt.close();

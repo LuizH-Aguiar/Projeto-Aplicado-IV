@@ -4,9 +4,6 @@ Produzido por: Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
 package telas;
 
 import dao.ClientesDAO;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import model.Clientes;
 
@@ -52,8 +49,9 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
         }
         jMenuBar1 = new javax.swing.JMenuBar();
         menutitulo = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
         menucadastrar = new javax.swing.JMenu();
-        menuprincipal = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(425, 325));
@@ -113,9 +111,13 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
         ftxtcpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         getContentPane().add(ftxtcpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 110, 30));
 
-        menutitulo.setText("Cadastro de clientes                                                          ");
+        menutitulo.setText("Cadastro de clientes");
         jMenuBar1.add(menutitulo);
 
+        jMenu1.setText("                                    ");
+        jMenuBar1.add(jMenu1);
+
+        menucadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643774 - disk floppy save saveas saved saving.png"))); // NOI18N
         menucadastrar.setText("Cadastrar");
         menucadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -124,13 +126,14 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
         });
         jMenuBar1.add(menucadastrar);
 
-        menuprincipal.setText("Menu");
-        menuprincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643769 - building home house main menu start.png"))); // NOI18N
+        jMenu5.setText("Menu");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuprincipalMouseClicked(evt);
+                jMenu5MouseClicked(evt);
             }
         });
-        jMenuBar1.add(menuprincipal);
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -144,27 +147,53 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
 
     private void menucadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menucadastrarMouseClicked
         try {
+            boolean autoriza;
+            String cpf = ftxtcpf.getText();
+            double credito;
+            
+            cpf = cpf.replace(".","");
+            cpf = cpf.replace("-","");
+            cpf = cpf.replace(" ","");
+            
+            try {
+                credito = Double.parseDouble(txtcredito.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Valor de crédito deve ser um valor numérico");
+                txtcredito.grabFocus();
+                return;
+            }
+            
+            autoriza = txtnome.getText().length() >= 3 && txtcredito.getText().length() >= 3 && txtcidade.getText().length() >= 3 && txtendereco.getText().length() >= 3;
+            
+            if (!autoriza) {
+                JOptionPane.showMessageDialog(null, "Todos os campos devem conter no mínimo 3 caracteres");
+                return;
+            } else if (cpf.length() != 11) {
+                JOptionPane.showMessageDialog(null, "CPF incompleto");
+                ftxtcpf.grabFocus();
+                return;
+            } else if (credito < 0) {
+                JOptionPane.showMessageDialog(null, "Valor de crédito deve ser maior ou igual a zero");
+                txtcredito.grabFocus();
+                return;
+            }
+            
             int uf;
-            String cpf;
             
             Clientes obj = new Clientes();
 
             obj.setNome(txtnome.getText());
             obj.setCidade(txtcidade.getText());
             obj.setEndereco(txtendereco.getText());
-            obj.setCredito(Double.parseDouble(txtcredito.getText()));
+            obj.setCredito(credito);
             obj.setConta(0);
-            
-            cpf = ftxtcpf.getText();
-            cpf = cpf.replace(".","");
-            cpf = cpf.replace("-","");
-            
             obj.setCpf(cpf);
             
             uf = cbuf.getSelectedIndex();
             
             if(uf == 0){
                 JOptionPane.showMessageDialog(null, "Selecione a UF");
+                cbuf.grabFocus();
             } else {
                 obj.setUf(cbuf.getItemAt(uf));
                 
@@ -185,13 +214,13 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menucadastrarMouseClicked
 
-    private void menuprincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuprincipalMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_menuprincipalMouseClicked
-
     private void txtcreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcreditoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcreditoActionPerformed
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jMenu5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -237,9 +266,10 @@ public class FrmCadastroClientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menucadastrar;
-    private javax.swing.JMenu menuprincipal;
     private javax.swing.JMenu menutitulo;
     private javax.swing.JTextField txtcidade;
     private javax.swing.JTextField txtcredito;

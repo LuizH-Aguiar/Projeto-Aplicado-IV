@@ -43,8 +43,9 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
         }
         jMenuBar1 = new javax.swing.JMenuBar();
         menutitulo = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
         menucadastrar = new javax.swing.JMenu();
-        menuprincipal = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(425, 325));
@@ -76,9 +77,13 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
         getContentPane().add(txtrepresentante, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 130, 30));
         getContentPane().add(ftxtcnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 130, 30));
 
-        menutitulo.setText("Cadastro de fornecedores                                                ");
+        menutitulo.setText("Cadastro de fornecedores");
         jMenuBar1.add(menutitulo);
 
+        jMenu1.setText("                           ");
+        jMenuBar1.add(jMenu1);
+
+        menucadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643774 - disk floppy save saveas saved saving.png"))); // NOI18N
         menucadastrar.setText("Cadastrar");
         menucadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -87,13 +92,14 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
         });
         jMenuBar1.add(menucadastrar);
 
-        menuprincipal.setText("Menu");
-        menuprincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643769 - building home house main menu start.png"))); // NOI18N
+        jMenu5.setText("Menu");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuprincipalMouseClicked(evt);
+                jMenu5MouseClicked(evt);
             }
         });
-        jMenuBar1.add(menuprincipal);
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -107,16 +113,29 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
 
     private void menucadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menucadastrarMouseClicked
         try {
+            boolean autoriza;
+            String cnpj = ftxtcnpj.getText();
+            
+            cnpj = cnpj.replace(".","");
+            cnpj = cnpj.replace("-","");
+            cnpj = cnpj.replace("/","");
+            cnpj = cnpj.replace(" ","");
+            
+            autoriza = txtempresa.getText().length() >= 3 && txtrepresentante.getText().length() >= 3;
+            
+            if (!autoriza) {
+                JOptionPane.showMessageDialog(null, "Todos os campos devem conter no mínimo 3 caracteres");
+                return;
+            } else if (cnpj.length() != 14) {
+                JOptionPane.showMessageDialog(null, "CNPJ incompleto");
+                ftxtcnpj.grabFocus();
+                return;
+            }
+            
             Fornecedores obj = new Fornecedores();
 
             obj.setEmpresa(txtempresa.getText());
             obj.setRepresentante(txtrepresentante.getText());
-            
-            String cnpj = ftxtcnpj.getText();
-            cnpj = cnpj.replace(".","");
-            cnpj = cnpj.replace("-","");
-            cnpj = cnpj.replace("/","");
-            
             obj.setCnpj(cnpj);
 
             FornecedoresDAO dao = new FornecedoresDAO();
@@ -132,9 +151,13 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menucadastrarMouseClicked
 
-    private void menuprincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuprincipalMouseClicked
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
         this.dispose();
-    }//GEN-LAST:event_menuprincipalMouseClicked
+    }//GEN-LAST:event_jMenu4MouseClicked
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jMenu5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -176,9 +199,10 @@ public class FrmCadastroFornecedores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menucadastrar;
-    private javax.swing.JMenu menuprincipal;
     private javax.swing.JMenu menutitulo;
     private javax.swing.JTextField txtempresa;
     private javax.swing.JTextField txtrepresentante;

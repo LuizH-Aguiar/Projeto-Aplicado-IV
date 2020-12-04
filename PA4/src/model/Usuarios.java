@@ -13,6 +13,7 @@ public class Usuarios {
     private String nome;
     private String senha;
     private String tipo;
+    private int Cod_Tipo;
 
     public int getCod_usuario() {
         return Cod_usuario;
@@ -46,8 +47,11 @@ public class Usuarios {
         this.tipo = tipo;
     }
 
-    @Override
-    public String toString() {
-        return "Usuarios{" + "Cod_usuario=" + Cod_usuario + ", nome=" + nome + ", senha=" + senha + ", tipo=" + tipo + '}';
+    public int getCod_Tipo() {
+        return Cod_Tipo;
+    }
+
+    public void setCod_Tipo(int Cod_Tipo) {
+        this.Cod_Tipo = Cod_Tipo;
     }
 }

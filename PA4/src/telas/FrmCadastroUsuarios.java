@@ -3,9 +3,12 @@ Produzido por: Gabriel Nunes de Moraes Ghirardelli & Luiz Henrique Aguiar Campos
  */
 package telas;
 
+import dao.TiposUsuariosDAO;
 import dao.UsuariosDAO;
+import java.awt.List;
 import model.Usuarios;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -37,13 +40,19 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menutitulo = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
         menucadastrar = new javax.swing.JMenu();
-        menuprincipal = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(425, 325));
         setResizable(false);
         setSize(new java.awt.Dimension(425, 325));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -65,7 +74,7 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
         txtsenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         getContentPane().add(txtsenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 130, 30));
 
-        cbtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--------", "Administrador", "Vendedor" }));
+        cbtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione o tipo" }));
         cbtipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbtipoActionPerformed(evt);
@@ -77,9 +86,13 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
         jLabel2.setText("Tipo:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, -1, 30));
 
-        menutitulo.setText("Cadastro de usuários                                                         ");
+        menutitulo.setText("Cadastro de usuários");
         jMenuBar1.add(menutitulo);
 
+        jMenu1.setText("                                  ");
+        jMenuBar1.add(jMenu1);
+
+        menucadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643774 - disk floppy save saveas saved saving.png"))); // NOI18N
         menucadastrar.setText("Cadastrar");
         menucadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -88,13 +101,14 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
         });
         jMenuBar1.add(menucadastrar);
 
-        menuprincipal.setText("Menu");
-        menuprincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643769 - building home house main menu start.png"))); // NOI18N
+        jMenu5.setText("Menu");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuprincipalMouseClicked(evt);
+                jMenu5MouseClicked(evt);
             }
         });
-        jMenuBar1.add(menuprincipal);
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -112,6 +126,15 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
 
     private void menucadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menucadastrarMouseClicked
         try {
+            boolean autoriza;
+            
+            autoriza = txtnome.getText().length() >= 3 && txtsenha.getText().length() >= 3;
+            
+            if (!autoriza) {
+                JOptionPane.showMessageDialog(null, "Todos os campos devem conter no mínimo 3 caracteres");
+                return;
+            }
+            
             Usuarios obj = new Usuarios();
             
             obj.setNome(txtnome.getText());
@@ -121,11 +144,16 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
             
             if(tipo == 0){
                 JOptionPane.showMessageDialog(null, "Selecione o tipo");
+                cbtipo.grabFocus();
             } else {
-                obj.setTipo(cbtipo.getItemAt(tipo));
+                TiposUsuariosDAO daot = new TiposUsuariosDAO();
+                DefaultTableModel model = daot.BuscarTipos(cbtipo.getItemAt(tipo));
                 
-                UsuariosDAO dao = new UsuariosDAO();
-                dao.Cadastrar(obj);
+                obj.setTipo(cbtipo.getItemAt(tipo));
+                obj.setCod_Tipo(Integer.parseInt(model.getValueAt(0, 0).toString()));
+                
+                UsuariosDAO daou = new UsuariosDAO();
+                daou.Cadastrar(obj);
                 JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 
                 this.dispose();
@@ -133,6 +161,8 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
             
             txtnome.setText(null);
             txtsenha.setText(null);
+            cbtipo.removeAllItems();
+            cbtipo.addItem("Selecione o tipo");
             cbtipo.setSelectedIndex(0);
             
         } catch (Exception e) {
@@ -140,9 +170,26 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menucadastrarMouseClicked
 
-    private void menuprincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuprincipalMouseClicked
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
         this.dispose();
-    }//GEN-LAST:event_menuprincipalMouseClicked
+    }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        try {
+            TiposUsuariosDAO dao = new TiposUsuariosDAO();
+            
+            List tipos = dao.ListarTipos();
+            
+            cbtipo.removeAllItems();
+            cbtipo.addItem("Selecione o tipo");
+            
+            for(int i=0;i<tipos.getItemCount();i++){
+                cbtipo.addItem(tipos.getItem(i));
+            }
+            
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -191,9 +238,10 @@ public class FrmCadastroUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menucadastrar;
-    private javax.swing.JMenu menuprincipal;
     private javax.swing.JMenu menutitulo;
     private javax.swing.JTextField txtnome;
     private javax.swing.JTextField txtsenha;

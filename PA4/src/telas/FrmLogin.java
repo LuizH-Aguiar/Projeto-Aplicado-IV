@@ -19,7 +19,6 @@ public class FrmLogin extends javax.swing.JFrame {
      */
     public FrmLogin() {
         initComponents();
-        //this.setLocationRelativeTo(null);
     }
 
     /**
@@ -33,19 +32,16 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         txtusuario = new javax.swing.JTextField();
-        txtpassword = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtsenha = new javax.swing.JPasswordField();
+        btnsair = new javax.swing.JButton();
+        btnentrar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        cbtipo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFocusCycleRoot(false);
         setMinimumSize(new java.awt.Dimension(400, 350));
-        setPreferredSize(new java.awt.Dimension(400, 350));
         setResizable(false);
         setSize(new java.awt.Dimension(400, 350));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -58,12 +54,7 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Usuário:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 80, 30));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Tipo:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 80, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 80, 30));
 
         txtusuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtusuario.addActionListener(new java.awt.event.ActionListener() {
@@ -71,42 +62,35 @@ public class FrmLogin extends javax.swing.JFrame {
                 txtusuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(txtusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 160, 30));
+        getContentPane().add(txtusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 160, 30));
 
-        txtpassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 160, 30));
+        txtsenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        getContentPane().add(txtsenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 160, 30));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("Sair");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnsair.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnsair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643764 - back backward left reply turn.png"))); // NOI18N
+        btnsair.setText("Sair");
+        btnsair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnsairActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 90, 30));
+        getContentPane().add(btnsair, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 110, 40));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("Entrar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnentrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnentrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3643754 - available open padlock unlock unlocked.png"))); // NOI18N
+        btnentrar.setText("Entrar");
+        btnentrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnentrarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 90, 30));
+        getContentPane().add(btnentrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 110, 40));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Senha:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 80, 30));
-
-        cbtipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--------------", "Administrador", "Vendedor" }));
-        cbtipo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbtipoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cbtipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 160, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 80, 30));
 
         pack();
         setLocationRelativeTo(null);
@@ -116,51 +100,36 @@ public class FrmLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtusuarioActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnsairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsairActionPerformed
         exit(0);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnsairActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+    private void btnentrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnentrarActionPerformed
+
         try {
-            int tipo;
-            boolean ret;
-
             Usuarios obj = new Usuarios();
 
             obj.setNome(txtusuario.getText());
-            obj.setSenha(txtpassword.getText());
-
-            tipo = cbtipo.getSelectedIndex();
-
-            switch (tipo){
-                case 0:
-                System.out.println("Selecione o tipo de usuário");
-                break;
-
-                case 1:
-                obj.setTipo("Administrador");
-                break;
-
-                case 2:
-                obj.setTipo("Vendedor");
-                break;
-            }
+            obj.setSenha(txtsenha.getText());
 
             UsuariosDAO dao = new UsuariosDAO();
-            ret = dao.EfetuaLogin(obj);
-            if(ret) this.dispose();
+            
+            obj = dao.EfetuaLogin(obj);
+            
+            if (obj.getCod_usuario() != -1) {
+                FrmMenu menu = new FrmMenu();
+                menu.DadosLogin(obj);
+                menu.setVisible(true);
+                
+                this.dispose();
+            }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Aconteceu o erro: " + e);
 
         }
 
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void cbtipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbtipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbtipoActionPerformed
+    }//GEN-LAST:event_btnentrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,14 +167,12 @@ public class FrmLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbtipo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnentrar;
+    private javax.swing.JButton btnsair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPasswordField txtpassword;
+    private javax.swing.JPasswordField txtsenha;
     private javax.swing.JTextField txtusuario;
     // End of variables declaration//GEN-END:variables
 }
